@@ -84,8 +84,8 @@ function! SpaceVim#mapping#leader#defindglobalMappings() abort
         \ 'Toggle recording mode')
 
   " Duplicate lines
-  nnoremap <Leader>d m`YP``
-  vnoremap <Leader>d YPgv
+  "nnoremap <Leader>d m`YP``
+  "vnoremap <Leader>d YPgv
 
   call SpaceVim#mapping#def('nnoremap <silent>', '<Leader><C-c>',
         \ ':<c-u>call zvim#util#CopyToClipboard(1)<cr>',
