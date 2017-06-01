@@ -49,7 +49,7 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'split' : 1,
       \ 'hidden': 1,
       \ 'no_quit' : 1,
-      \ 'force_hide' : 1,
+      \ 'force_hide' : 0,
       \ })
 
 "catch
