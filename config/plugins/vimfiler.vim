@@ -41,7 +41,7 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'winminwidth' : 30,
       \ 'toggle' : 1,
       \ 'auto_expand': 1,
-      \ 'direction' : 'rightbelow',
+      \ 'direction' : 'topleft',
       \ 'explorer_columns' : s:setcolum(),
       \ 'parent': 0,
       \ 'status' : 1,
@@ -49,7 +49,7 @@ call vimfiler#custom#profile('default', 'context', {
       \ 'split' : 1,
       \ 'hidden': 1,
       \ 'no_quit' : 1,
-      \ 'force_hide' : 0,
+      \ 'force_hide' : 1,
       \ })
 
 "catch
@@ -85,7 +85,7 @@ function! s:vimfilerinit()
   nmap <buffer> p      <Plug>(vimfiler_preview_file)
   nmap <buffer> V      <Plug>(vimfiler_clear_mark_all_lines)
   nmap <buffer> i      <Plug>(vimfiler_switch_to_history_directory)
-  nmap <buffer> <Tab>  <Plug>(vimfiler_switch_to_other_window)
+  "nmap <buffer> <Tab>  <Plug>(vimfiler_switch_to_other_window)
   nmap <buffer> <C-r>  <Plug>(vimfiler_redraw_screen)
 endf
 
