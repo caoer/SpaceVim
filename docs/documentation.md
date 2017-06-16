@@ -57,6 +57,13 @@ title:  "Documentation"
             * [Window manipulation key bindings](#window-manipulation-key-bindings)
         * [Buffers and Files](#buffers-and-files)
             * [Buffers manipulation key bindings](#buffers-manipulation-key-bindings)
+            * [Create a new empty buffer](#create-a-new-empty-buffer)
+            * [Special Buffers](#special-buffers)
+            * [Files manipulations key bindings](#files-manipulations-key-bindings)
+            * [Vim and SpaceVim files](#vim-and-spacevim-files)
+        * [File tree](#file-tree)
+            * [File tree navigation](#file-tree-navigation)
+            * [Open file with file tree.](#open-file-with-file-tree)
     * [Auto-saving](#auto-saving)
     * [Searching](#searching)
     * [Editing](#editing)
@@ -93,7 +100,6 @@ title:  "Documentation"
             * [Window Management](#window-management)
             * [Native functions](#native-functions)
             * [Plugin: Unite](#plugin-unite)
-            * [Plugin: VimFiler](#plugin-vimfiler)
             * [Plugin: neocomplete](#plugin-neocomplete)
             * [Plugin: NERD Commenter](#plugin-nerd-commenter)
             * [Plugin: Goyo and Limelight](#plugin-goyo-and-limelight)
@@ -729,6 +735,126 @@ Key Binding | Description
 
 Buffer manipulation commands (start with `b`):
 
+Key Binding | Description
+----------- | -----------
+`SPC TAB` | switch to alternate buffer in the current window (switch back and forth)
+`SPC b b` | switch to a buffer (via denite/unite)
+`SPC b d` | kill the current buffer (does not delete the visited file)
+`SPC u SPC b d` | kill the current buffer and window (does not delete the visited file) (TODO)
+`SPC b D` | kill a visible buffer using vim-choosewin
+`SPC u SPC b D` | kill a visible buffer and its window using ace-window(TODO)
+`SPC b C-d` | kill other buffers
+`SPC b C-D` | kill buffers using a regular expression(TODO)
+`SPC b e` | erase the content of the buffer (ask for confirmation)
+`SPC b h` | open *SpaceVim* home buffer
+`SPC b n` | switch to next buffer avoiding special buffers
+`SPC b m` | open *Messages* buffer
+`SPC u SPC b m` | kill all buffers and windows except the current one(TODO)
+`SPC b p` | switch to previous buffer avoiding special buffers
+`SPC b P` | copy clipboard and replace buffer (useful when pasting from a browser)
+`SPC b R` | revert the current buffer (reload from disk)
+`SPC b s` | switch to the *scratch* buffer (create it if needed)
+`SPC b w` | toggle read-only (writable state)
+`SPC b Y` | copy whole buffer to clipboard (useful when copying to a browser)
+`z f` | Make current function or comments visible in buffer as much as possible (TODO)
+
+##### Create a new empty buffer
+
+Key Binding | Description
+----------- | -----------
+`SPC b N h` | create new empty buffer in a new window on the left
+`SPC b N j` | create new empty buffer in a new window at the bottom
+`SPC b N k` | create new empty buffer in a new window above
+`SPC b N l` | create new empty buffer in a new window below
+`SPC b N n` | create new empty buffer in current window
+
+##### Special Buffers
+
+In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim isself. and all of this buffers are not listed.
+
+##### Files manipulations key bindings
+
+Files manipulation commands (start with f):
+
+Key Binding | Description
+----------- | -----------
+`SPC f b` | go to file bookmarks
+`SPC f c` | copy current file to a different location(TODO)
+`SPC f C d` | convert file from unix to dos encoding
+`SPC f C u` | convert file from dos to unix encoding
+`SPC f D` | delete a file and the associated buffer (ask for confirmation)
+`SPC f E` | open a file with elevated privileges (sudo edit)(TODO)
+`SPC f f` | open file
+`SPC f F` | try to open the file under point
+`SPC f o` | open a file using the default external program(TODO)
+`SPC f R` | rename the current file(TODO)
+`SPC f s` | save a file
+`SPC f S` | save all files
+`SPC f r` | open a recent file
+`SPC f t` | toggle file tree side bar
+`SPC f T` | show file tree side bar
+`SPC f y` | show and copy current file absolute path in the cmdline
+
+
+##### Vim and SpaceVim files
+
+Convenient key bindings are located under the prefix `SPC f v` to quickly navigate between Vim and SpaceVim specific files.
+
+Key Binding | Description
+----------- | -----------
+`SPC f v v` | display and copy SpaceVim version
+`SPC f v d` | open SpaceVim custom configuration file
+
+#### File tree
+
+SpaceVim use vimfiler as the default file tree, and the default key binding is `F3`, and SpaceVim also provide `SPC f t` and `SPC f T` to open the file tree. to change the file explore to nerdtree:
+
+```vim
+" the default value is vimfiler
+let g:spacevim_filemanager = 'nerdtree'
+```
+
+VCS integration is supported, there will be a colum status, this feature maybe make vimfiler slow, so it is not enabled by default. to enable this feature, add `let g:spacevim_enable_vimfiler_gitstatus = 1` to your custom config. here is any picture for this feature:
+
+![file-tree](https://user-images.githubusercontent.com/13142418/26881817-279225b2-4bcb-11e7-8872-7e4bd3d1c84e.png)
+
+##### File tree navigation
+
+Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
+
+
+Key Binding | Description
+-----------| -----------
+`<F3>` or `SPC f t` | Toggle file explorer
+| **Within _VimFiler_ buffers** | |
+`<Left>` or `h`     | go to parent node and collapse expanded directory
+`<Down>` or `j`     | select next file or directory
+`<Up>` or `k`       | select previous file or directory
+`<Right>` or `l`    | open selected file or expand directory
+`Ctrl`+`j`          | Un-map
+`Ctrl`+`l`          | Un-map
+`E`                 | Un-map
+`.`                 | toggle visible ignored files
+`sv`                | Split edit
+`sg`                | Vertical split edit
+`p`                 | Preview
+`i`                 | Switch to directory history
+`v`                 | Quick look
+`gx`                | Execute with vimfiler associated
+`'`                 | Toggle mark current line
+`V`                 | Clear all marks
+`Ctrl`+`r`          | Redraw
+
+##### Open file with file tree.
+
+If there is only one file buffer opened, a file is opened in the active window, otherwise we need to use vim-choosewin to select a window to open the file.
+
+Key Binding | Description
+-----------| -----------
+`l` or `Enter` | open file in one window
+`sg` | open file in an vertically split window
+`sv` | open file in an horizontally split window
+
 ### Auto-saving
 
 ### Searching
@@ -1137,24 +1263,6 @@ Key   | Mode | Action
 `<leader>`+`ugf` | Normal | Opens Unite file with word at cursor
 `<leader>`+`ugt` | Normal/visual | Opens Unite tag with word at cursor
 
-##### Plugin: VimFiler
-
-Key   | Mode | Action
------ |:----:| ------------------
-`<F3>` | Normal | Toggle file explorer
-| **Within _VimFiler_ buffers** |||
-`Ctrl`+`j` | Normal | Un-map
-`Ctrl`+`l` | Normal | Un-map
-`E` | Normal | Un-map
-`sv` | Normal | Split edit
-`sg` | Normal | Vertical split edit
-`p` | Normal | Preview
-`i` | Normal | Switch to directory history
-`v` | Normal | Quick look
-`gx` | Normal | Execute with vimfiler associated
-`'` | Normal | Toggle mark current line
-`V` | Normal | Clear all marks
-`Ctrl`+`r` | Normal | Redraw
 
 ##### Plugin: neocomplete
 

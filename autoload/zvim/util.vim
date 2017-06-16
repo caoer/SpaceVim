@@ -112,7 +112,7 @@ fu! zvim#util#CopyToClipboard(...) abort
     else
         try
             let @+=expand('%:p')
-            echo 'Copied to clipboard'
+            echo 'Copied to clipboard ' . @+
         catch /^Vim\%((\a\+)\)\=:E354/
             if has('nvim')
                 echohl WarningMsg | echom 'Can not find clipboard, for more info see :h clipboard' | echohl None
@@ -187,7 +187,7 @@ endfunction
 
 function! zvim#util#OpenVimfiler() abort
     if bufnr('vimfiler') == -1
-        VimFiler
+        silent VimFiler
         if exists(':AirlineRefresh')
             AirlineRefresh
         endif
@@ -198,7 +198,7 @@ function! zvim#util#OpenVimfiler() abort
         endif
         wincmd p
     else
-        VimFiler
+        silent VimFiler
         doautocmd WinEnter
         if exists(':AirlineRefresh')
             AirlineRefresh
