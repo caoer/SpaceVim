@@ -459,6 +459,7 @@ function! SpaceVim#end() abort
   call SpaceVim#mapping#leader#defindglobalMappings()
   call SpaceVim#mapping#leader#defindKEYs()
   call SpaceVim#mapping#space#init()
+  call SpaceVim#mapping#g#init()
   if !SpaceVim#mapping#guide#has_configuration()
     let g:leaderGuide_map = {}
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
@@ -529,7 +530,7 @@ endfunction
 
 
 function! SpaceVim#welcome() abort
-  exe 'cd ' . g:_spacevim_enter_dir
+  exe 'cd' fnameescape(g:_spacevim_enter_dir)
   if exists('g:_spacevim_checking_flag') && g:_spacevim_checking_flag
     return
   endif
