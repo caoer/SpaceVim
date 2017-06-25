@@ -50,11 +50,11 @@ function! SpaceVim#layers#tools#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['a', 'c'], 'Calendar', 'vim calendar', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['e', 'a'], 'FencAutoDetect',
         \ 'Auto detect the file encoding', 1)
-  nmap mm <Plug>BookmarkToggle
-  nmap mi <Plug>BookmarkAnnotate
-  nmap ma <Plug>BookmarkShowAll
-  nmap mn <Plug>BookmarkNext
-  nmap mp <Plug>BookmarkPrev
+  nmap <space>mm <Plug>BookmarkToggle
+  nmap <space>mi <Plug>BookmarkAnnotate
+  nmap <space>ma <Plug>BookmarkShowAll
+  nmap <space>mn <Plug>BookmarkNext
+  nmap <space>mp <Plug>BookmarkPrev
   nnoremap <silent> <F7> :MundoToggle<CR>
   augroup rainbow_lisp
     autocmd!
