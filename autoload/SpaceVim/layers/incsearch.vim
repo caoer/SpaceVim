@@ -52,10 +52,6 @@ function! SpaceVim#layers#incsearch#config() abort
                     \   ],
                     \ }), get(a:, 1, {}))
     endfunction
-
-    noremap <silent><expr> z/ incsearch#go(<SID>config_fuzzyall())
-    noremap <silent><expr> z? incsearch#go(<SID>config_fuzzyall({'command': '?'}))
-    noremap <silent><expr> zg? incsearch#go(<SID>config_fuzzyall({'is_stay': 1}))
     function! s:config_easyfuzzymotion(...) abort
         return extend(copy({
                     \   'converters': [incsearch#config#fuzzy#converter()],
@@ -65,19 +61,24 @@ function! SpaceVim#layers#incsearch#config() abort
                     \   'is_stay': 1
                     \ }), get(a:, 1, {}))
     endfunction
-
-    noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
-    call SpaceVim#mapping#space#def('nnoremap', ['/',], 'call feedkeys("\<Space>/", "m")', 'incsearch-fuzzy', 1)
 endfunction
 
 
 let s:si_flag = 0
 function! s:update_search_index(key) abort
     if a:key == 'n'
-        normal! n
+        if mapcheck("<Plug>(incsearch-nohl-n)") !=# ''
+            call feedkeys("\<Plug>(incsearch-nohl-n)")
+        else
+            normal! n
+        endif
         normal! ml
     elseif a:key == 'N'
-        normal! N
+        if mapcheck("<Plug>(incsearch-nohl-n)") !=# ''
+            call feedkeys("\<Plug>(incsearch-nohl-N)")
+        else
+            normal! N
+        endif
         normal! ml
     endif
     if s:si_flag == 0
