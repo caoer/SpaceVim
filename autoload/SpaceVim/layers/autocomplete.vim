@@ -19,7 +19,6 @@
 " SpaceVim will not append `./.SpaceVim/snippets` as default snippets directory.
 
 
-
 function! SpaceVim#layers#autocomplete#plugins() abort
   let plugins = [
         \ ['honza/vim-snippets',          { 'on_event' : 'InsertEnter', 'loadconf_before' : 1}],
@@ -66,12 +65,46 @@ endfunction
 
 
 function! SpaceVim#layers#autocomplete#config() abort
-  if g:spacevim_autocomplete_method ==# 'ycm'
-    sunmap <S-TAB>
-    iunmap <S-TAB>
-  endif
   let g:delimitMate_matchpairs = '[:],{:},<:>'
   inoremap <silent><expr> ( complete_parameter#pre_complete("()")
+
+  "mapping
+  imap <silent><expr><TAB> SpaceVim#mapping#tab()
+  imap <silent><expr><S-TAB> SpaceVim#mapping#shift_tab()
+  imap <silent><expr><CR> SpaceVim#mapping#enter()
+  smap <expr><TAB>
+        \ neosnippet#expandable_or_jumpable() ?
+        \ "\<Plug>(neosnippet_expand_or_jump)" :
+        \ (complete_parameter#jumpable(1) ?
+        \ "\<plug>(complete_parameter#goto_next_parameter)" :
+        \ "\<TAB>")
+
+  inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+  inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+  inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+  inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+  " in origin vim or neovim Alt + / will insert a /, this should be disabled.
+  imap <expr> <M-/>
+        \ neosnippet#expandable() ?
+        \ "\<Plug>(neosnippet_expand)" : ""
+    call SpaceVim#mapping#space#def('nnoremap', ['i', 's'], 'Unite neosnippet', 'insert sneppets', 1)
+endfunction
+
+function! SpaceVim#layers#autocomplete#set_variable(var)
+
+  let s:return_key_behavior = get(a:var,
+        \ 'auto-completion-return-key-behavior',
+        \ 'nil')
+  let s:tab_key_behavior = get(a:var,
+        \ 'auto-completion-tab-key-behavior',
+        \ 'smart')
+  let s:key_sequence = get(a:var,
+        \ 'auto-completion-complete-with-key-sequence',
+        \ 'nil')
+  let s:key_sequence_delay = get(a:var,
+        \ 'auto-completion-complete-with-key-sequence-delay',
+        \ 0.1)
+
 endfunction
 
 
