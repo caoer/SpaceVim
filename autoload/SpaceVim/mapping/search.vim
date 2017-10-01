@@ -38,7 +38,7 @@ function! SpaceVim#mapping#search#grep(key, scope)
     elseif a:scope ==# 'B'
         execute 'Unite grep:$buffers::' . expand('<cword>') . '  -start-insert'
     elseif a:scope ==# 'p'
-        exe 'Unite grep:.'
+        exe 'Unite grep:. -no-quit'
     elseif a:scope ==# 'P'
         execute 'Unite grep:.::' . expand('<cword>') . '  -start-insert'
     elseif a:scope ==# 'f'
