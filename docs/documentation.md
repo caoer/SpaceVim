@@ -1,6 +1,6 @@
 ---
 title:  "Documentation"
-description: "A guide for using SpaceVim."
+description: "General documentation about how to using SpaceVim, including the quick start guide and FAQs."
 ---
 
 # SpaceVim Documentation
@@ -23,6 +23,7 @@ description: "A guide for using SpaceVim."
     - [Updating from the SpaceVim Buffer](#updating-from-the-spacevim-buffer)
     - [Updating Manually with git](#updating-manually-with-git)
   - [Update plugins](#update-plugins)
+  - [Get SpaceVim log](#get-spacevim-log)
 - [Configuration layers](#configuration-layers)
 - [Custom Configuration](#custom-configuration)
   - [Automatic Generation](#automatic-generation)
@@ -87,10 +88,14 @@ description: "A guide for using SpaceVim."
       - [Auto-indent pasted text](#auto-indent-pasted-text)
     - [Text manipulation commands](#text-manipulation-commands)
     - [Text insertion commands](#text-insertion-commands)
+    - [Increase/Decrease numbers](#increasedecrease-numbers)
     - [Commenting](#commenting)
     - [Multi-Encodings](#multi-encodings)
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
+- [EditorConfig](#editorconfig)
+- [Vim Server](#vim-server)
+  - [Connecting to the Vim server](#connecting-to-the-vim-server)
 - [Achievements](#achievements)
   - [issues](#issues)
   - [Stars, forks and watchers](#stars-forks-and-watchers)
@@ -110,8 +115,8 @@ description: "A guide for using SpaceVim."
   - [Windows function leader](#windows-function-leader)
   - [Unite work flow leader](#unite-work-flow-leader)
 - [Unite centric work-flow](#unite-centric-work-flow)
-    - [Plugin Highlights](#plugin-highlights)
-    - [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
+  - [Plugin Highlights](#plugin-highlights)
+  - [Non Lazy-Loaded Plugins](#non-lazy-loaded-plugins)
   - [Lazy-Loaded Plugins](#lazy-loaded-plugins)
     - [Language](#language)
       - [Commands](#commands)
@@ -226,6 +231,10 @@ To update manually close Vim and update the git repository:
 
 Use `:SPUpdate` command will update all the plugins and SpaceVim itself. after `:SPUpdate`, you can assign plugins need to be updated. Use <kbd>Tab</kbd> to complete plugin names after `:SPUpdate`.
 
+### Get SpaceVim log
+
+Use `:SPDebugInfo!` command will desplay the log of SpaceVim. You also can use `SPC h I` to open a buffer with issue template.
+
 ## Configuration layers
 
 This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
@@ -291,6 +300,17 @@ let g:spacevim_disabled_plugins=[
 let g:spacevim_custom_plugins = [
 \ ['plasticboy/vim-markdown', {'on_ft' : 'markdown'}],
 \ ['wsdjeg/GitHub.vim'],
+\ ]
+
+" If you want to add custom color palette for statusline and tabline, use these options:
+let g:spacevim_custom_color_palette = [
+\ ['#282828', '#b8bb26', 246, 235],
+\ ['#a89984', '#504945', 239, 246],
+\ ['#a89984', '#3c3836', 237, 246],
+\ ['#665c54', 241],
+\ ['#282828', '#83a598', 235, 109],
+\ ['#282828', '#fe8019', 235, 208],
+\ ['#282828', '#8ec07c', 235, 108],
 \ ]
 
 " set the guifont
@@ -396,6 +416,7 @@ The statusline and tabline are heavily customized with the following capabilitie
 The `core#statusline` layer provide a heavily customized powerline with the following capabilities:, It is inspired by spacemacs's mode-line.
 
 - show the window number
+- show the current mode
 - color code for current state
 - show the number of search results
 - toggle syntax checking info
@@ -407,7 +428,7 @@ Reminder of the color codes for the states:
 | Mode    | Color  |
 | ------- | ------ |
 | Normal  | Grey   |
-| Insert  | Blus   |
+| Insert  | Blue   |
 | Visual  | Orange |
 | Replace | Aqua   |
 
@@ -424,6 +445,7 @@ Some elements can be dynamically toggled:
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
 | `SPC t m p` | toggle the cursor position                                          |
 | `SPC t m t` | toggle the time                                                     |
+| `SPC t m d` | toggle the date                                                     |
 | `SPC t m T` | toggle the mode line itself                                         |
 | `SPC t m v` | toggle the version control info                                     |
 
@@ -461,7 +483,7 @@ all the colors based on the current colorscheme
 
 **Statusline separators:**
 
-It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custon configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
+It is possible to easily customize the statusline separator by setting the `g:spacevim_statusline_separator` variable in your custom configration file and then redraw the statusline. For instance if you want to set back the separator to the well-known arrow separator add the following snippet to your configuration file:
 
 ```vim
 let g:spacevim_statusline_separator = 'arrow'
@@ -493,6 +515,40 @@ The letters displayed in the statusline correspond to the key bindings used to t
 | `SPC t S`   | Ⓢ       | S     | enabled in spell checking                     |
 | `SPC t w`   | ⓦ       | w     | whitespace mode                               |
 
+**colorscheme of statusline:**
+
+current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to contribute theme please check the template of a statusline theme.
+
+```vim
+" the theme colors should be 
+" [
+"    \ [ a_guifg, a_guibg, a_ctermfg, a_ctermbg],
+"    \ [ b_guifg, b_guibg, b_ctermfg, b_ctermbg],
+"    \ [ c_guifg, c_guibg, c_ctermfg, c_ctermbg],
+"    \ [ z_guibg, z_ctermbg],
+"    \ [ i_guifg, i_guibg, i_ctermfg, i_ctermbg],
+"    \ [ v_guifg, v_guibg, v_ctermfg, v_ctermbg],
+"    \ [ r_guifg, r_guibg, r_ctermfg, r_ctermbg],
+" \ ]
+" group_a: window id
+" group_b/group_c: stausline sections
+" group_z: empty area 
+" group_i: window id in insert mode
+" group_v: window id in visual mode
+" group_r: window id in select mode
+function! SpaceVim#mapping#guide#theme#gruvbox#palette() abort
+    return [
+                \ ['#282828', '#a89984', 246, 235],
+                \ ['#a89984', '#504945', 239, 246],
+                \ ['#a89984', '#3c3836', 237, 246],
+                \ ['#665c54', 241],
+                \ ['#282828', '#83a598', 235, 109],
+                \ ['#282828', '#fe8019', 235, 208],
+                \ ['#282828', '#8ec07c', 235, 108],
+                \ ]
+endfunction
+```
+
 #### tabline
 
 Buffers will be listed on tabline if there is only one tab, each item contains the index, filetype icon and the bufname. if there are more than one tab, all tabs will be listed on the tabline. each item can be quickly accessed using `<Leader> number`. default `<Leader>` is `\`.
@@ -508,6 +564,15 @@ Buffers will be listed on tabline if there is only one tab, each item contains t
 | `<Leader> 7` | jump to index 7 on tabline |
 | `<Leader> 8` | jump to index 8 on tabline |
 | `<Leader> 9` | jump to index 9 on tabline |
+
+SpaceVim tabline also support mouse click, left mouse button will switch to buffer, middle button will delete the buffer.
+
+**NOTE:** this feature is only supported in neovim with `has('tablineat')`.
+
+| Key Binding      | Description        |
+| ---------------- | ------------------ |
+| `<Mouse-left>`   | jump to the buffer |
+| `<Mouse-middle>` | delete the buffer  |
 
 ## Manual
 
@@ -809,7 +874,7 @@ Buffer manipulation commands (start with `b`):
 
 ##### Special Buffers
 
-In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim isself. and all of this buffers are not listed.
+In SpaceVim, there are many special buffers, these buffers are created by plugins or SpaceVim itself. And these buffers are not listed.
 
 ##### Files manipulations key bindings
 
@@ -860,27 +925,31 @@ VCS integration is supported, there will be a column status, this feature maybe 
 
 Navigation is centered on the `hjkl` keys with the hope of providing a fast navigation experience like in [vifm](https://github.com/vifm):
 
-| Key Binding                   | Description                                       |
-| ----------------------------- | ------------------------------------------------- |
-| `<F3>` or `SPC f t`           | Toggle file explorer                              |
-| **Within _VimFiler_ buffers** |                                                   |
-| `<Left>` or `h`               | go to parent node and collapse expanded directory |
-| `<Down>` or `j`               | select next file or directory                     |
-| `<Up>` or `k`                 | select previous file or directory                 |
-| `<Right>` or `l`              | open selected file or expand directory            |
-| `Ctrl`+`j`                    | Un-map                                            |
-| `Ctrl`+`l`                    | Un-map                                            |
-| `E`                           | Un-map                                            |
-| `.`                           | toggle visible ignored files                      |
-| `sv`                          | Split edit                                        |
-| `sg`                          | Vertical split edit                               |
-| `p`                           | Preview                                           |
-| `i`                           | Switch to directory history                       |
-| `v`                           | Quick look                                        |
-| `gx`                          | Execute with vimfiler associated                  |
-| `'`                           | Toggle mark current line                          |
-| `V`                           | Clear all marks                                   |
-| `Ctrl`+`r`                    | Redraw                                            |
+| Key Binding                    | Description                                       |
+| ------------------------------ | ------------------------------------------------- |
+| `<F3>` or `SPC f t`            | Toggle file explorer                              |
+| **Within _file tree_ buffers** |                                                   |
+| `<Left>` or `h`                | go to parent node and collapse expanded directory |
+| `<Down>` or `j`                | select next file or directory                     |
+| `<Up>` or `k`                  | select previous file or directory                 |
+| `<Right>` or `l`               | open selected file or expand directory            |
+| `Ctrl`+`j`                     | Un-map                                            |
+| `Ctrl`+`l`                     | Un-map                                            |
+| `E`                            | Un-map                                            |
+| `N`                            | Create new file under corsor                      |
+| `yy`                           | Copy file full path to system clipboard           |
+| `yY`                           | Copy file to system clipboard                     |
+| `P`                            | Paste file to the position under the cursor       |
+| `.`                            | toggle visible ignored files                      |
+| `sv`                           | Split edit                                        |
+| `sg`                           | Vertical split edit                               |
+| `p`                            | Preview                                           |
+| `i`                            | Switch to directory history                       |
+| `v`                            | Quick look                                        |
+| `gx`                           | Execute with vimfiler associated                  |
+| `'`                            | Toggle mark current line                          |
+| `V`                            | Clear all marks                                   |
+| `Ctrl`+`r`                     | Redraw                                            |
 
 ##### Open file with file tree.
 
@@ -969,7 +1038,7 @@ after pressing prefix `z` in normal mode, if you do not remember the mappings, y
 | `zO`        | open folds recursively                       |
 | `zR`        | set `foldlevel` to deepest fold              |
 | `zW`        | mark wrong spelled                           |
-| `zX`        | re-apply `foldleve`                          |
+| `zX`        | re-apply `foldlevel`                         |
 | `z^`        | cursor to screen bottom line N               |
 | `za`        | toggle a fold                                |
 | `zb`        | redraw, cursor line at bottom                |
@@ -1152,18 +1221,18 @@ Background search keyword in a project, when searching done, the count will be s
 
 key binding in FlyGrep buffer:
 
-Key Binding	Description
-\-----------\| -----------
-`<Esc>` | close FlyGrep buffer
-`<Enter>` | open file at the cursor line
-`<Tab>` | move cursor line down
-`<S-Tab>` | move cursor line up
-`<Bs>` | remove last character
-`<C-w>` | remove the Word before the cursor
-`<C-u>` | remove the Line before the cursor
-`<C-k>` | remove the Line after the cursor
-`<C-a>`/`<Home>` | Go to the beginning of the line
-`<C-e>`/`<End>` | Go to the end of the line
+| Key Binding      | Description                       |
+| ---------------- | --------------------------------- |
+| `<Esc>`          | close FlyGrep buffer              |
+| `<Enter>`        | open file at the cursor line      |
+| `<Tab>`          | move cursor line down             |
+| `<S-Tab>`        | move cursor line up               |
+| `<Bs>`           | remove last character             |
+| `<C-w>`          | remove the Word before the cursor |
+| `<C-u>`          | remove the Line before the cursor |
+| `<C-k>`          | remove the Line after the cursor  |
+| `<C-a>`/`<Home>` | Go to the beginning of the line   |
+| `<C-e>`/`<End>`  | Go to the end of the line         |
 
 #### Persistent highlighting
 
@@ -1254,6 +1323,23 @@ Text insertion commands (start with `i`):
 | `SPC i U 4` | insert UUIDv4 (use universal argument to insert with CID format)      |
 | `SPC i U U` | insert UUIDv4 (use universal argument to insert with CID format)      |
 
+#### Increase/Decrease numbers
+
+| Key Binding | Description                                                         |
+| ----------- | ------------------------------------------------------------------- |
+| `SPC n +`   | increase the number under point by one and initiate transient state |
+| `SPC n -`   | decrease the number under point by one and initiate transient state |
+
+In transient state:
+
+| Key Binding   | Description                            |
+| ------------- | -------------------------------------- |
+| `+`           | increase the number under point by one |
+| `-`           | decrease the number under point by one |
+| Any other key | leave the transient state              |
+
+**Tips:** you can increase or decrease a value by more that once by using a prefix argument (i.e. `10 SPC n +` will add 10 to the number under point).
+
 #### Commenting
 
 Comments are handled by [nerdcommenter](https://github.com/scrooloose/nerdcommenter), it’s bound to the following keys.
@@ -1314,6 +1400,7 @@ Custom sign symbol:
 | ------ | ----------- | --------------------------- |
 | `✖`    | Error       | `g:spacevim_error_symbol`   |
 | `➤`    | warning     | `g:spacevim_warning_symbol` |
+| `🛈`   | Info        | `g:spacevim_info_symbol`    |
 
 ### Managing projects
 
@@ -1324,6 +1411,26 @@ project manager commands start with `p`:
 | Key Binding | Description                                           |
 | ----------- | ----------------------------------------------------- |
 | `SPC p '`   | open a shell in project’s root (with the shell layer) |
+
+## EditorConfig
+
+SpaceVim has support for [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
+
+To customize your editorconfig experience, read the [editorconfig-vim package’s documentation](https://github.com/editorconfig/editorconfig-vim/blob/master/README.md).
+
+## Vim Server
+
+SpaceVim starts a server at launch. This server is killed whenever you close your Vim windows.
+
+### Connecting to the Vim server
+
+If you are using neovim, you need to install [neovim-remote](https://github.com/mhinz/neovim-remote), then add this to your bashrc.
+
+    export PATH=$PATH:$HOME/.SpaceVim/bin
+
+Use `svc` to open a file in the existing Vim server, or using `nsvc` to open a file in the existing neovim server.
+
+![server-and-client](https://user-images.githubusercontent.com/13142418/32554968-7164fe9c-c4d6-11e7-95f7-f6a6ea75e05b.gif)
 
 <!-- SpaceVim Achievements start -->
 
@@ -1337,13 +1444,13 @@ project manager commands start with `p`:
 
 ### Stars, forks and watchers
 
-| Achievements      | Account                                         |
-| ----------------- | ----------------------------------------------- |
-| First stargazers  | [monkeydterry](https://github.com/monkeydterry) |
-| 100th stargazers  | [naraj](https://github.com/naraj)               |
-| 1000th stargazers | [icecity96](https://github.com/icecity96)       |
-| 2000th stargazers | [frowhy](https://github.com/frowhy)             |
-| 3000th stargazers | [purkylin](https://github.com/purkylin)         |
+| Achievements      | Account                                           |
+| ----------------- | ------------------------------------------------- |
+| First stargazers  | [monkeydterry](https://github.com/monkeydterry)   |
+| 100th stargazers  | [iwillalwaysbe](https://github.com/iwillalwaysbe) |
+| 1000th stargazers | [elvin-du](https://github.com/elvin-du)           |
+| 2000th stargazers | [tobiasgoecke](https://github.com/tobiasgoecke)   |
+| 3000th stargazers | [WellerQu](https://github.com/WellerQu)           |
 
 <!-- SpaceVim Achievements end -->
 
@@ -1442,7 +1549,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 - List all the starred repos in github.com, fuzzy find and open the website of the repo. default key is `<leader>ls`
     ![2017-02-01_1359x722](https://cloud.githubusercontent.com/assets/13142418/22506915/deb99caa-e8bd-11e6-9b80-316281ddb48c.png)
 
-#### Plugin Highlights
+### Plugin Highlights
 
 - Package management with caching enabled and lazy loading
 - Project-aware tabs and label
@@ -1459,7 +1566,7 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 
     [lazy-loaded]&#x3A; ./config/plugins.vim
 
-#### Non Lazy-Loaded Plugins
+### Non Lazy-Loaded Plugins
 
 | Name             | Description                                           |
 | ---------------- | ----------------------------------------------------- |
@@ -1620,8 +1727,8 @@ Unite work flow leader can only be used in normal mode. Unite leader need unite 
 | ----------------------- | :-----------: | ---------------------------------------------------------------- |
 | `F2`                    |     _All_     | Toggle tagbar                                                    |
 | `F3`                    |     _All_     | Toggle Vimfiler                                                  |
-| `<leader>` + num        |     Normal    | Jump to the buffer whit the num index                            |
-| `<Alt>` + num           |     Normal    | Jump to the buffer whit the num index, this only works in neovim |
+| `<leader>` + num        |     Normal    | Jump to the buffer with the num index                            |
+| `<Alt>` + num           |     Normal    | Jump to the buffer with the num index, this only works in neovim |
 | `<Alt>` + `h`/`<Left>`  |     Normal    | Jump to left buffer in the tabline, this only works in neovim    |
 | `<Alt>` + `l`/`<Right>` |     Normal    | Jump to Right buffer in the tabline, this only works in neovim   |
 | `<leader>`+`ts`         |     Normal    | Toggle spell-checker (:setlocal spell!)                          |

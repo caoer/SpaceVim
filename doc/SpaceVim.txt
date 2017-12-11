@@ -138,10 +138,32 @@ enable it:
   let g:spacevim_enable_key_frequency = 1
 <
 
+                                              *g:spacevim_autocomplete_method*
+Set the autocomplete engine of spacevim, the default logic is:
+>
+  if has('python3')
+    let g:spacevim_autocomplete_method = 'deoplete'
+  elseif has('lua')
+    let g:spacevim_autocomplete_method = 'neocomplete'
+  elseif has('python')
+    let g:spacevim_autocomplete_method = 'completor'
+  elseif has('timers')
+    let g:spacevim_autocomplete_method = 'asyncomplete'
+  else
+    let g:spacevim_autocomplete_method = 'neocomplcache'
+  endif
+<
+
                                                    *g:spacevim_enable_neomake*
 SpaceVim default checker is neomake. If you want to use syntastic, use:
 >
   let g:spacevim_enable_neomake = 0
+<
+
+                                                       *g:spacevim_enable_ale*
+Use ale for syntax checking, disabled by default.
+>
+  let g:spacevim_enable_ale = 1
 <
 
                                                           *g:spacevim_guifont*
@@ -188,8 +210,50 @@ Set the statusline separators of statusline, default is 'arrow'
 See more details in: http://spacevim.org/documentation/#statusline
 
 
+                                         *g:spacevim_statusline_left_sections*
+Define the left section of statusline in active windows. By default:
+>
+  let g:spacevim_statusline_left_sections =
+    \ [
+    \ 'winnr',
+    \ 'filename',
+    \ 'major mode',
+    \ 'minor mode lighters',
+    \ 'version control info'
+    \ ]
+<
+
+                                        *g:spacevim_statusline_right_sections*
+Define the right section of statusline in active windows. By default:
+>
+  let g:spacevim_statusline_right_sections = ['fileformat', 'cursorpos']
+<
+
                                        *g:spacevim_statusline_unicode_symbols*
 Enable/Disable unicode symbols in statusline
+
+                                   *g:spacevim_enable_statusline_display_mode*
+Enable/Disable display mode. Default is 0, mode will be displayed in
+statusline. To enable this feature:
+>
+  let g:spacevim_enable_statusline_display_mode = 1
+<
+
+                                             *g:spacevim_custom_color_palette*
+Set the statusline/tabline palette of color, default values depends on the
+theme
+>
+  let g:spacevim_custom_color_palette = [
+    \ ['#282828', '#b8bb26', 246, 235],
+    \ ['#a89984', '#504945', 239, 246],
+    \ ['#a89984', '#3c3836', 237, 246],
+    \ ['#665c54', 241],
+    \ ['#282828', '#83a598', 235, 109],
+    \ ['#282828', '#fe8019', 235, 208],
+    \ ['#282828', '#8ec07c', 235, 108],
+    \ ]
+<
+
 
                                               *g:spacevim_enable_cursorcolumn*
 Enable/Disable cursorcolumn. Default is 0, cursorcolumn will be highlighted in
@@ -210,14 +274,25 @@ Set the warning symbol for SpaceVim's syntax maker. Default is '⚠'.
   let g:spacevim_warning_symbol = '!'
 <
 
-                                            *g:spacevim_terminal_cursor_shape*
-Set the SpaceVim cursor shape in the terminal. Set to 0 to prevent Nvim from
-changing the cursor shape.  Set to 1 to enable non-blinking mode-sensitive
-cursor (this is the default).  Set to 2 to enable blinking mode-sensitive
-cursor. Host terminal must support the DECSCUSR CSI escape sequence.
+                                                      *g:spacevim_info_symbol*
+Set the information symbol for SpaceVim's syntax maker. Default is '🛈'.
+>
+  let g:spacevim_info_symbol = 'i'
+<
 
-Depending on the terminal emulator, using this option with nvim under tmux
-might require adding the following to ~/.tmux.conf:
+                                            *g:spacevim_terminal_cursor_shape*
+Set the SpaceVim cursor shape in the terminal.
+>
+  0 : to prevent Nvim from changing the cursor shape.
+  1 : to enable non-blinking mode-sensitive cursor.
+  2 : to enable blinking mode-sensitive cursor (default).
+<
+
+>
+<
+Host terminal must support the DECSCUSR CSI escape sequence. Depending on the
+terminal emulator, using this option with nvim under tmux might require adding
+the following to ~/.tmux.conf:
 >
   set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
 <
@@ -225,7 +300,7 @@ might require adding the following to ~/.tmux.conf:
                                                 *g:spacevim_vim_help_language*
 Set the help language of vim. Default is 'en'.  You can change it to Chinese.
 >
-  let g:spacevim_vim_help_language = 'chinese'
+  let g:spacevim_vim_help_language = 'cn'
 <
 
                                                          *g:spacevim_language*
@@ -233,6 +308,9 @@ Set the message language of vim. Default is 'en_US.UTF-8'.
 >
   let g:spacevim_language = 'en_CA.utf8'
 <
+
+                                                *g:spacevim_keep_server_alive*
+Option for keep the spacevim server ailive
 
                                                       *g:spacevim_colorscheme*
 The colorscheme of SpaceVim. Default is 'gruvbox'.
@@ -368,10 +446,10 @@ vim to start up slowly if there are too many files in the current directory.
 <
 
                                         *g:spacevim_enable_vimfiler_gitstatus*
-Enable/Disable gitstatus colum in vimfiler buffer, default is 0.
+Enable/Disable gitstatus column in vimfiler buffer, default is 0.
 
                                      *g:spacevim_enable_vimfiler_filetypeicon*
-Enable/Disable filetypeicon colum in vimfiler buffer, default is 0.
+Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 
                                                         *g:spacevim_hosts_url*
 The host file url. This option is for Chinese users who can not use Google and
@@ -413,7 +491,7 @@ COMMANDS                                                   *SpaceVim-commands*
 <
 
 :SPReinstall                                                    *:SPReinstall*
-  Command for reinstall plugin, support completion of plugin anme.
+  Command for reinstall plugin, support completion of plugin name.
 
 :SPInstall                                                        *:SPInstall*
   Command for install plugins.
@@ -435,7 +513,7 @@ SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
       3 : log error messages only
 
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
-  Set the log output file of SpaceVim. Default is `~/.SpaceVim/.SpaceVim.log`.
+  Set the log output file of SpaceVim. Default is empty.
 
 ==============================================================================
 LAYERS                                                       *SpaceVim-layers*
@@ -747,15 +825,15 @@ MAPPINGS
 >
   Mode            Key             Function
   ---------------------------------------------
-  normal          <leader>gi      go implements
-  normal          <leader>gf      go info
-  normal          <leader>ge      go rename
-  normal          <leader>gr      go run
-  normal          <leader>gb      go build
-  normal          <leader>gt      go test
-  normal          <leader>gd      go doc
-  normal          <leader>gv      go doc vertical
-  normal          <leader>gco     go coverage
+  normal          SPC l i         go implements
+  normal          SPC l f         go info
+  normal          SPC l e         go rename
+  normal          SPC l r         go run
+  normal          SPC l b         go build
+  normal          SPC l t         go test
+  normal          SPC l d         go doc
+  normal          SPC l v         go doc vertical
+  normal          SPC l c         go coverage
 <
 
 ==============================================================================
@@ -910,7 +988,8 @@ MAPPINGS
   normal      gd          rust-definition
   normal      gs          rust-definition-split
   normal      gx          rust-definition-vertical
-  normal      <leader>gd  rust-doc
+  normal      SPC l d     rust-doc
+  normal      SPC l r     execute current file
 <
 
 ==============================================================================
@@ -951,9 +1030,8 @@ TMUX                                                     *SpaceVim-layer-tmux*
 
 Adds integration between tmux and vim panes. Switch between panes seamlessly.
 This layer is not added by default. To include it, add
-`SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. This layer
-currently overwrites some SpaceVim keybinds including multiple cursors. If you
-are having issues with <C-h> in a neovim buffer, see
+`SpaceVim#layers#load('tmux')` to your `~/.SpaceVim.d/init.vim`. If you are
+having issues with <C-h> in a neovim buffer, see
 `https://github.com/neovim/neovim/issues/2048#issuecomment-78045837`
 
 MAPPINGS

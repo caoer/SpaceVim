@@ -7,7 +7,7 @@ description: "SpaceVim 是一个社区驱动的 Vim 配置，内含多种语言�
 # SpaceVim 中文手册
 
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
-![Version](https://img.shields.io/badge/version-0.5.0--dev-FF00CC.svg)
+![Version](https://img.shields.io/badge/version-0.6.0--dev-FF00CC.svg)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 [![Doc](https://img.shields.io/badge/doc-%3Ah%20SpaceVim-orange.svg?style=flat-square)](https://github.com/SpaceVim/SpaceVim/blob/dev/doc/SpaceVim.txt)
 [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
@@ -292,7 +292,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 图中包含了一个 Neovim 的终端， 一个语法树窗口，一个文件树窗口以及一个 TernJS 定义窗口
 
-想要查阅更多截图，清阅读 [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
+想要查阅更多截图，请阅读 [issue #415](https://github.com/SpaceVim/SpaceVim/issues/415)
 
 ### 谁将从 SpaceVim 中获益？
 
@@ -345,7 +345,7 @@ Neovim 运行在 iTerm2 上，采用 SpaceVim，配色为：_base16-solarized-da
 
 当然，你也可以通过 `SPACEVIMDIR` 这一环境变量，执定用户配置目录。当然也可以通过软连接连改变目录位置，以便配置备份。
 
-SpaceVim 同时还支持项目本地配置，配置出世文件为，当前目录下的 `.SpaceVim.d/init.vim` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
+SpaceVim 同时还支持项目本地配置，配置初始文件为，当前目录下的 `.SpaceVim.d/init.vim` 文件。同时当前目录下的 `.SpaceVim.d/` 也将被加入到 Vim 运行时路径。
 
 这是一个用户配置文件示例：
 
@@ -519,6 +519,7 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 | `SPC t m n` | toggle the cat! (if colors layer is declared in your dotfile)(TODO) |
 | `SPC t m p` | 显示/隐藏鼠标位置信息                                               |
 | `SPC t m t` | 显示/隐藏时间                                                       |
+| `SPC t m d` | 显示/隐藏日期                                                       |
 | `SPC t m T` | 显示/隐藏状态栏                                                     |
 | `SPC t m v` | 显示/隐藏版本控制信息                                               |
 
@@ -1415,6 +1416,7 @@ Custom sign symbol:
 | ------ | ----------- | --------------------------- |
 | `✖`    | Error       | `g:spacevim_error_symbol`   |
 | `➤`    | warning     | `g:spacevim_warning_symbol` |
+| `🛈`    | Info        | `g:spacevim_info_symbol`    |
 
 ### Managing projects
 
