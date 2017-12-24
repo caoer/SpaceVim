@@ -1,3 +1,11 @@
+"=============================================================================
+" main.vim --- Main file of SpaceVim
+" Copyright (c) 2016-2017 Shidong Wang & Contributors
+" Author: Shidong Wang < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: MIT license
+"=============================================================================
+
 let g:Config_Main_Home = fnamemodify(expand('<sfile>'),
       \ ':p:h:gs?\\?'.((has('win16') || has('win32')
       \ || has('win64'))?'\':'/') . '?')
@@ -23,6 +31,7 @@ function! s:parser_argv() abort
     endif
 endfunction
 let s:status = s:parser_argv()
+call SpaceVim#plugins#projectmanager#RootchandgeCallback()
 if s:status[0]
     let g:_spacevim_enter_dir = s:status[1]
     augroup SPwelcome

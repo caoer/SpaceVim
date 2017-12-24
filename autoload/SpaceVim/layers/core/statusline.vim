@@ -72,6 +72,9 @@ let s:loaded_sections = ['syntax checking', 'major mode', 'minor mode lighters',
 let s:loaded_sections_r = g:spacevim_statusline_right_sections
 let s:loaded_sections_l = g:spacevim_statusline_left_sections
 
+let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
+let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:i_separators['arrow'])
+
 " build in sections for SpaceVim statusline
 function! s:winnr(...) abort
   if a:0 > 1
@@ -351,10 +354,18 @@ function! SpaceVim#layers#core#statusline#get(...) abort
     return '%#SpaceVim_statusline_a# HelpDescribe %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'SpaceVimRunner'
     return '%#SpaceVim_statusline_a# Runner %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#runner#status()}'
+  elseif &filetype ==# 'SpaceVimREPL'
+    return '%#SpaceVim_statusline_a# REPL %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{SpaceVim#plugins#repl#status()}'
   elseif &filetype ==# 'VimMailClient'
     return '%#SpaceVim_statusline_a# VimMail %#SpaceVim_statusline_a_SpaceVim_statusline_b# %{mail#client#win#status().dir}'
   elseif &filetype ==# 'SpaceVimQuickFix'
     return '%#SpaceVim_statusline_a# SpaceVimQuickFix %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
+  elseif &filetype ==# 'VebuggerShell'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# VebuggerShell %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+  elseif &filetype ==# 'VebuggerTerminal'
+    return '%#SpaceVim_statusline_ia#' . s:winnr(1) . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# VebuggerTerminal %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
   endif
   if a:0 > 0
     return s:active()
@@ -383,7 +394,7 @@ endfunction
 
 function! s:inactive() abort
   let l = '%#SpaceVim_statusline_ia#' . s:winnr() . '%#SpaceVim_statusline_ia_SpaceVim_statusline_b#' . s:lsep . '%#SpaceVim_statusline_b#'
-  let secs = [s:filename(), &filetype, s:modes(), s:git_branch()]
+  let secs = [s:filename(), " " . &filetype, s:modes(), s:git_branch()]
   let base = 10
   for sec in secs
     let len = s:STATUSLINE.len(sec)
@@ -485,8 +496,6 @@ function! SpaceVim#layers#core#statusline#rsep()
 endfunction
 
 function! SpaceVim#layers#core#statusline#config() abort
-  let [s:lsep , s:rsep] = get(s:separators, g:spacevim_statusline_separator, s:separators['arrow'])
-  let [s:ilsep , s:irsep] = get(s:i_separators, g:spacevim_statusline_inactive_separator, s:i_separators['arrow'])
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'm'], 'call SpaceVim#layers#core#statusline#toggle_section("minor mode lighters")',
         \ 'toggle the minor mode lighters', 1)
   call SpaceVim#mapping#space#def('nnoremap', ['t', 'm', 'v'], 'call SpaceVim#layers#core#statusline#toggle_section("version control info")',

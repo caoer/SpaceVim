@@ -25,6 +25,8 @@ description: "General documentation about how to using SpaceVim, including the q
   - [Update plugins](#update-plugins)
   - [Get SpaceVim log](#get-spacevim-log)
 - [Configuration layers](#configuration-layers)
+  - [Purpose](#purpose)
+  - [Structure](#structure)
 - [Custom Configuration](#custom-configuration)
   - [Automatic Generation](#automatic-generation)
   - [Alternative directory](#alternative-directory)
@@ -93,6 +95,7 @@ description: "General documentation about how to using SpaceVim, including the q
     - [Multi-Encodings](#multi-encodings)
   - [Errors handling](#errors-handling)
   - [Managing projects](#managing-projects)
+    - [Searching files in project](#searching-files-in-project)
 - [EditorConfig](#editorconfig)
 - [Vim Server](#vim-server)
   - [Connecting to the Vim server](#connecting-to-the-vim-server)
@@ -173,7 +176,7 @@ Community-driven configuration provides curated packages tuned by power users an
     <kbd>[Window]</kbd> for all the window and buffer commands or <kbd>[Unite]</kbd> for the
     unite work flow commands.
 - **Fast boot time:** Lazy-load 90% of plugins with [dein.vim]
-- **Lower the risk of RSI:** by heavily using the space bar instead of modifiers. 
+- **Lower the risk of RSI:** by heavily using the space bar instead of modifiers.
 - **Batteries included:** discover hundreds of ready-to-use packages nicely
     organised in configuration layers following a set of
     [conventions](http://spacevim.org/development/).
@@ -238,6 +241,19 @@ Use `:SPDebugInfo!` command will desplay the log of SpaceVim. You also can use `
 ## Configuration layers
 
 This section is an overview of layers. A more extensive introduction to writing configuration layers can be found in [SpaceVim's layers page](http://spacevim.org/layers/) (recommended reading!).
+
+### Purpose
+
+Layers help collect related packages together to provide features. For example, the `lang#python` layer provides auto-completion, syntax checking, and REPL support for python files. This approach helps keep configuration organized and reduces overhead for the user by keeping them from having to think about what packages to install. To install all the `python` features the user has just to add the `lang#python` layer to their custom configration file.
+
+### Structure
+
+In SpaceVim, a layer is a single file. In a layer, for example, `autocomplete` layer, the file is `autoload/SpaceVim/layers/autocomplete.vim`, and there are there public functions:
+
+- `SpaceVim#layers#autocomplete#plugins()`: return a list of plugins used in this plugins.
+- `SpaceVim#layers#autocomplete#config()`: layer config, such as key bindings and autocmds.
+- `SpaceVim#layers#autocomplete#set_variable()`: function for setting layer options.
+
 
 ## Custom Configuration
 
@@ -318,6 +334,13 @@ let g:spacevim_guifont = 'DejaVu\ Sans\ Mono\ for\ Powerline\ 11'
 ```
 
 Comprehensive documentation is available for each layer by <kbd>:h SpaceVim</kbd>.
+
+if you want to add custom `SPC` prefix key bindings, you can add this to SpaceVim configration file, **be sure** the key bindings is not used in SpaceVim.
+
+```vim
+call SpaceVim#custom#SPCGroupName(['G'], '+TestGroup')
+call SpaceVim#custom#SPC('nore', ['G', 't'], 'echom 1', 'echomessage 1', 1)
+```
 
 ## Concepts
 
@@ -520,7 +543,7 @@ The letters displayed in the statusline correspond to the key bindings used to t
 current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you want to contribute theme please check the template of a statusline theme.
 
 ```vim
-" the theme colors should be 
+" the theme colors should be
 " [
 "    \ [ a_guifg, a_guibg, a_ctermfg, a_ctermbg],
 "    \ [ b_guifg, b_guibg, b_ctermfg, b_ctermbg],
@@ -532,7 +555,7 @@ current version only support `gruvbox`/`molokai`/`nord`/`one`/`onedark`, if you 
 " \ ]
 " group_a: window id
 " group_b/group_c: stausline sections
-" group_z: empty area 
+" group_z: empty area
 " group_i: window id in insert mode
 " group_v: window id in visual mode
 " group_r: window id in select mode
@@ -1412,6 +1435,16 @@ project manager commands start with `p`:
 | ----------- | ----------------------------------------------------- |
 | `SPC p '`   | open a shell in project’s root (with the shell layer) |
 
+#### Searching files in project
+
+| Key Binding | Description                              |
+| ----------- | ---------------------------------------- |
+| `SPC p f`   | find files in current project            |
+| `SPC p /`   | fuzzy search for text in current project |
+| `SPC p k`   | kill all buffers of current project      |
+| `SPC p t`   | find project root                        |
+| `SPC p p`   | list all projects                        |
+
 ## EditorConfig
 
 SpaceVim has support for [EditorConfig](http://editorconfig.org/), a configuration file to “define and maintain consistent coding styles between different editors and IDEs.”
@@ -2061,3 +2094,6 @@ As SpaceVim use above bookmarks mappings, so you can not use `a`, `m`, `n`, `p` 
 [textobj-user]: https://github.com/kana/vim-textobj-user
 
 [textobj-multiblock]: https://github.com/osyo-manga/vim-textobj-multiblock
+
+
+<!-- vim:set nowrap: -->

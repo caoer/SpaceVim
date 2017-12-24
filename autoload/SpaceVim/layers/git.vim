@@ -1,6 +1,6 @@
 function! SpaceVim#layers#git#plugins() abort
   let plugins = [
-        \ ['cohama/agit.vim',      { 'on_cmd' : ['Agit','AgitFile']}],
+        \ ['junegunn/gv.vim',      { 'on_cmd' : ['GV']}],
         \ ['airblade/vim-gitgutter',      { 'merged' : 0}],
         \ ['tpope/vim-fugitive',   { 'merged' : 0}],
         \ ]
@@ -22,7 +22,7 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Gina commit', 'edit git commit', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gina push', 'git push', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gina diff', 'view git diff', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gina add .', 'state all files', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gina add .', 'stage all files', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view git blame', 1)
   else
     call SpaceVim#mapping#space#def('nnoremap', ['g', 's'], 'Gita status', 'git status', 1)
@@ -31,7 +31,7 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'c'], 'Gita commit', 'edit git commit', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'p'], 'Gita push', 'git push', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'd'], 'Gita diff', 'view git diff', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gita add .', 'state all files', 1)
+    call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gita add .', 'stage all files', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view git blame', 1)
   endif
   nmap <leader>hj <plug>(signify-next-hunk)
@@ -47,8 +47,8 @@ function! SpaceVim#layers#git#config() abort
   call SpaceVim#mapping#space#def('nnoremap', ['g', 'M'], 'call call('
         \ . string(function('s:display_last_commit_of_current_line')) . ', [])',
         \ 'display the last commit message of the current line', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'AgitFile', 'View git log of current file', 1)
-  call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'Agit', 'View git log of current repo', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'V'], 'GV!', 'View git log of current file', 1)
+  call SpaceVim#mapping#space#def('nnoremap', ['g', 'v'], 'GV', 'View git log of current repo', 1)
 endfunction
 
 function! s:display_last_commit_of_current_line() abort

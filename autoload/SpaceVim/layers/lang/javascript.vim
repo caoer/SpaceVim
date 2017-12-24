@@ -13,7 +13,7 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
      \ ['pangloss/vim-javascript', { 'on_ft': 'javascript' }],
      \ ]
 
-  if !s:use_lsp
+  if !SpaceVim#layers#lsp#check_filetype('javascript')
     call add(plugins, ['ternjs/tern_for_vim', {
           \ 'on_ft': 'javascript', 'build' : 'npm install' }])
     call add(plugins, ['carlitux/deoplete-ternjs', { 'on_ft': [
@@ -23,12 +23,9 @@ function! SpaceVim#layers#lang#javascript#plugins() abort
   return plugins
 endfunction
 
-let s:use_lsp = 0
 let s:auto_fix = 0
 
 function! SpaceVim#layers#lang#javascript#set_variable(var) abort
-  let s:use_lsp = get(a:var, 'use_lsp', 0) && has('nvim')
-        \ && executable('javascript-typescript-stdio')
   let s:auto_fix = get(a:var, 'auto_fix', 0)
 endfunction
 
@@ -46,8 +43,7 @@ function! SpaceVim#layers#lang#javascript#config() abort
   call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
         \ funcref('s:on_ft'))
 
-  if s:use_lsp
-    call SpaceVim#lsp#reg_server('javascript', ['javascript-typescript-stdio'])
+  if SpaceVim#layers#lsp#check_filetype('javascript')
     call SpaceVim#mapping#gd#add('javascript',
           \ function('SpaceVim#lsp#go_to_def'))
   else
@@ -81,7 +77,7 @@ function! s:on_ft() abort
   inoremap <silent><buffer> <C-j>g <Esc>:ImportJSGoto<CR>a
   " }}}
 
-  if s:use_lsp
+  if SpaceVim#layers#lsp#check_filetype('javascript')
     nnoremap <silent><buffer> K :call SpaceVim#lsp#show_doc()<CR>
 
     call SpaceVim#mapping#space#langSPC('nnoremap', ['l', 'd'],

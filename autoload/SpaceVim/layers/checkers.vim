@@ -8,7 +8,7 @@ let s:STRING = SpaceVim#api#import('data#string')
 function! SpaceVim#layers#checkers#plugins() abort
   let plugins = []
 
-  if g:spacevim_enable_neomake
+  if g:spacevim_enable_neomake && g:spacevim_enable_ale == 0
     call add(plugins, ['neomake/neomake', {'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1}])
   elseif g:spacevim_enable_ale
     call add(plugins, ['w0rp/ale', {'merged' : 0, 'loadconf_before' : 1}])
@@ -54,9 +54,11 @@ function! SpaceVim#layers#checkers#config() abort
       " when switch to Insert mode, stop timer and clear the signature
       if exists('##CmdLineEnter')
         autocmd InsertEnter,WinLeave,CmdLineEnter *
+              \ call <SID>neomake_signatures_clear()
+        autocmd CmdLineEnter *
               \ call <SID>neomake_signatures_clear() | redraw
       else
-        autocmd InsertEnter,WinLeave * call <SID>neomake_signatures_clear() | redraw
+        autocmd InsertEnter,WinLeave * call <SID>neomake_signatures_clear()
       endif
     elseif g:spacevim_enable_ale
       autocmd User ALELint 
@@ -75,7 +77,11 @@ let s:last_echoed_error = ''
 let s:clv = &conceallevel
 function! s:neomake_signatures_current_error(...) abort
   call s:neomake_signatures_clear()
-  let message = neomake#GetCurrentErrorMsg()
+  try
+    let message = neomake#GetCurrentErrorMsg()
+  catch /^Vim\%((\a\+)\)\=:E117/
+    let message = ''
+  endtry
   if empty(message)
     if exists('s:last_echoed_error')
       unlet s:last_echoed_error

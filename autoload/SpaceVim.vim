@@ -98,7 +98,7 @@ let g:spacevim_realtime_leader_guide   = 1
 "   let g:spacevim_enable_key_frequency = 1
 " <
 let g:spacevim_enable_key_frequency = 0
-if has('python3')
+if has('python3') && SpaceVim#util#haspyxlib('neovim')
   ""
   " Set the autocomplete engine of spacevim, the default logic is:
   " >
@@ -430,7 +430,17 @@ let g:spacevim_enable_vimfiler_gitstatus = 0
 " Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 let g:spacevim_enable_vimfiler_filetypeicon = 0
 let g:spacevim_smartcloseignorewin     = ['__Tagbar__' , 'vimfiler:default']
-let g:spacevim_smartcloseignoreft      = ['help', 'tagbar', 'vimfiler', 'SpaceVimRunner', 'SpaceVimQuickFix', 'HelpDescribe']
+let g:spacevim_smartcloseignoreft      = [
+      \ 'help',
+      \ 'tagbar',
+      \ 'vimfiler',
+      \ 'SpaceVimRunner',
+      \ 'SpaceVimREPL',
+      \ 'SpaceVimQuickFix',
+      \ 'HelpDescribe',
+      \ 'VebuggerShell',
+      \ 'VebuggerTerminal',
+      \ ]
 let g:spacevim_altmoveignoreft         = ['Tagbar' , 'vimfiler']
 let g:spacevim_enable_javacomplete2_py = 0
 let g:spacevim_src_root                = 'E:\sources\'
@@ -447,6 +457,7 @@ let g:spacevim_wildignore
 let g:_spacevim_mappings = {}
 " TODO merge leader guide
 let g:_spacevim_mappings_space_custom = []
+let g:_spacevim_mappings_space_custom_group_name = []
 
 if !exists('g:leaderGuide_vertical')
   let g:leaderGuide_vertical = 0
@@ -637,6 +648,8 @@ function! SpaceVim#end() abort
   if !g:spacevim_relativenumber
     set norelativenumber
   endif
+
+  let &shiftwidth = g:spacevim_default_indent
 
   if g:spacevim_realtime_leader_guide
     nnoremap <silent><nowait> <leader> :<c-u>LeaderGuide get(g:, 'mapleader', '\')<CR>

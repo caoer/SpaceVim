@@ -1,9 +1,9 @@
 ---
-title: "SpaceVim lang#ruby layer"
-description: "This layer is for ruby development, provide autocompletion, syntax checking, code format for ruby file."
+title: "SpaceVim lang#lua layer"
+description: "This layer is for lua development, provide autocompletion, syntax checking, code format for lua file."
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) lang#ruby
+# [SpaceVim Layers:](https://spacevim.org/layers) lang#lua
 
 <!-- vim-markdown-toc GFM -->
 
@@ -13,35 +13,35 @@ description: "This layer is for ruby development, provide autocompletion, syntax
   - [Syntax checking && Code formatting](#syntax-checking--code-formatting)
 - [Key bindings](#key-bindings)
   - [Inferior REPL process](#inferior-repl-process)
-  - [RuboCop](#rubocop)
   - [Running current script](#running-current-script)
 
 <!-- vim-markdown-toc -->
 
 ## Description
 
-This layer is for ruby development.
+This layer is for lua development.
 
 ## Installation
 
 ### Layer
 
-To use this configuration layer, add `SPLayer 'lang#ruby'` to your custom configuration file.
+To use this configuration layer, add `SPLayer 'lang#lua'` to your custom configuration file.
 
 ### Syntax checking && Code formatting
-
-To enable syntax checking and code formatting in spacevim, you need to install [cobocop](https://github.com/bbatsov/rubocop).
-
-```sh
-gem install rubocop
-```
 
 
 ## Key bindings
 
 ### Inferior REPL process
 
-Start a `irb` inferior REPL process with `SPC l s i`. 
+Start a `lua` or `luap` inferior REPL process with `SPC l s i`.  You may change the REPL command by layer option `repl_command`. for example, if you want to use `lua.repl`, load this layer via:
+
+```vim
+call SpaceVim#layers#load('lang#lua'
+    \ {
+    \ 'repl_command' : '~/.luarocks/lib/luarocks/rocks-5.3/luarepl/0.8-1/bin/rep.lua',
+    \ }
+```
 
 Send code to inferior process commands:
 
@@ -51,11 +51,6 @@ Send code to inferior process commands:
 | `SPC l s l` | send line and keep code buffer focused           |
 | `SPC l s s` | send selection text and keep code buffer focused |
 
-### RuboCop
-
-| Key Binding | Description                                |
-| ----------- | ------------------------------------------ |
-| `SPC l c f` | Runs RuboCop on the currently visited file |
 
 ### Running current script
 

@@ -38,10 +38,14 @@ function! SpaceVim#layers#edit#config() abort
   let g:user_emmet_leader_key=get(g:, 'user_emmet_leader_key', '<C-e>')
   let g:user_emmet_mode='a'
   let g:user_emmet_settings = {
-        \  'jsp' : {
-        \      'extends' : 'html',
-        \  },
-        \}
+        \ 'javascript': {
+        \ 'extends': 'jsx',
+        \ },
+        \ 'jsp' : {
+        \ 'extends': 'html',
+        \ },
+        \ }
+
   "noremap <SPACE> <Plug>(wildfire-fuel)
   vnoremap <C-SPACE> <Plug>(wildfire-water)
   let g:wildfire_objects = ["i'", 'i"', 'i)', 'i]', 'i}', 'ip', 'it']
@@ -211,7 +215,7 @@ function! s:text_transient_state() abort
         \ 'key' : 'J',
         \ 'desc' : 'move text down',
         \ 'func' : '',
-        \ 'cmd' : 'noautocmd normal! "_ddp',
+        \ 'cmd' : 'noautocmd silent! m .+1',
         \ 'exit' : 0,
         \ },
         \ ],
@@ -220,7 +224,7 @@ function! s:text_transient_state() abort
         \ 'key' : 'K',
         \ 'func' : '',
         \ 'desc' : 'move text up',
-        \ 'cmd' : 'noautocmd exe line(".") == 1 ? "" : "normal! \"_ddkP"',
+        \ 'cmd' : 'noautocmd silent! m .-2',
         \ 'exit' : 0,
         \ },
         \ ],
