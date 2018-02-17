@@ -8,7 +8,7 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/dev)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev)
 [![Version](https://img.shields.io/badge/version-0.7.0--dev-FF00CC.svg)](https://github.com/SpaceVim/SpaceVim)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
+[![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/master/LICENSE)
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
@@ -18,16 +18,16 @@ description: "SpaceVim is a community-driven vim distribution that seeks to prov
 SpaceVim is a distribution of the vim editor that's inspired by spacemacs.
 It manages collections of plugins in layers, which help collect related
 packages together to provide features. For example, the python layer collects
-deoplete.nvim, neomake and jedi-vim together to provides autocompletion,
+deoplete.nvim, neomake and jedi-vim together to provide autocompletion,
 syntax checking, and documentation lookup. This approach helps keep
 configuration organized and reduces overhead for the user by keeping them
 from having to think about what packages to install.
 
-Please star the project on github - it is a great way to show your
+If you like SpaceVim, feel free to star the project on github - it is a great way to show your
 appreciation while providing us motivation to continue working on this project.
 The extra visibility for the project doesn't hurt either!
 
-See the [Quick start guide](quick-start-guide), [documentation](documentation) or [the list of layers](layers) for more information.
+See the [Quick start guide](quick-start-guide), [documentation](documentation) or the [available layers](http://spacevim.org/layers/) for more information.
 
 ## New features
 

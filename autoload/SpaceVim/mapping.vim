@@ -143,7 +143,26 @@ endfunction
 function! SpaceVim#mapping#close_current_buffer() abort
   let buffers = get(g:, '_spacevim_list_buffers', [])
   let bn = bufnr('%')
-  let index = index(buffers, bn) 
+  let f = ''
+  if getbufvar(bn, '&modified', 0)
+    redraw!
+    echohl WarningMsg
+    echon 'save changes to "' . bufname(bn) . '"?  Yes/No/Cancel'
+    echohl None
+    let rs = nr2char(getchar())
+    if rs ==? 'y'
+      write
+    elseif rs ==? 'n'
+      let f = '!'
+    else
+      redraw!
+      echohl ModeMsg
+      echon 'canceled!'
+      echohl None
+      return
+    endif
+  endif
+  let index = index(buffers, bn)
   if index != -1
     if index == 0
       if len(buffers) > 1

@@ -28,28 +28,30 @@ CONTENTS                                                   *SpaceVim-contents*
       5. core#tabline............................|SpaceVim-layer-core-tabline|
       6. exprfold....................................|SpaceVim-layer-exprfold|
       7. format..............................................|SpaceVim-format|
-      8. incsearch..................................|SpaceVim-layer-incsearch|
-      9. indentmove................................|SpaceVim-layer-indentmove|
-      10. lang#c.......................................|SpaceVim-layer-lang-c|
-      11. lang#crystal...........................|SpaceVim-layer-lang-crystal|
-      12. lang#elixir.............................|SpaceVim-layer-lang-elixir|
-      13. lang#go.....................................|SpaceVim-layer-lang-go|
-      14. lang#java.................................|SpaceVim-layer-lang-java|
-      15. lang#julia...............................|SpaceVim-layer-lang-julia|
-      16. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
-      17. lang#lua...................................|SpaceVim-layer-lang-lua|
-      18. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
-      19. lang#php...................................|SpaceVim-layer-lang-php|
-      20. lang#pony.................................|SpaceVim-layer-lang-pony|
-      21. lang#puppet.............................|SpaceVim-layer-lang-puppet|
-      22. lang#python.............................|SpaceVim-layer-lang-python|
-      23. lang#rust.................................|SpaceVim-layer-lang-rust|
-      24. lang#scala...............................|SpaceVim-layer-lang-scala|
-      25. lang#tmux.................................|SpaceVim-layer-lang-tmux|
-      26. lang#xml...................................|SpaceVim-layer-lang-xml|
-      27. operator...................................|SpaceVim-layer-operator|
-      28. shell.........................................|SpaceVim-layer-shell|
-      29. tmux...........................................|SpaceVim-layer-tmux|
+      8. github........................................|SpaceVim-layer-github|
+      9. incsearch..................................|SpaceVim-layer-incsearch|
+      10. indentmove...............................|SpaceVim-layer-indentmove|
+      11. lang#c.......................................|SpaceVim-layer-lang-c|
+      12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      13. lang#elixir.............................|SpaceVim-layer-lang-elixir|
+      14. lang#go.....................................|SpaceVim-layer-lang-go|
+      15. lang#java.................................|SpaceVim-layer-lang-java|
+      16. lang#julia...............................|SpaceVim-layer-lang-julia|
+      17. lang#kotlin.............................|SpaceVim-layer-lang-kotlin|
+      18. lang#lua...................................|SpaceVim-layer-lang-lua|
+      19. lang#ocaml...............................|SpaceVim-layer-lang-ocaml|
+      20. lang#php...................................|SpaceVim-layer-lang-php|
+      21. lang#pony.................................|SpaceVim-layer-lang-pony|
+      22. lang#puppet.............................|SpaceVim-layer-lang-puppet|
+      23. lang#python.............................|SpaceVim-layer-lang-python|
+      24. lang#rust.................................|SpaceVim-layer-lang-rust|
+      25. lang#scala...............................|SpaceVim-layer-lang-scala|
+      26. lang#tmux.................................|SpaceVim-layer-lang-tmux|
+      27. lang#xml...................................|SpaceVim-layer-lang-xml|
+      28. operator...................................|SpaceVim-layer-operator|
+      29. shell.........................................|SpaceVim-layer-shell|
+      30. tmux...........................................|SpaceVim-layer-tmux|
+      31. tools#dash...............................|SpaceVim-layer-tools-dash|
   6. API........................................................|SpaceVim-api|
       1. cmdlinemenu................................|SpaceVim-api-cmdlinemenu|
       2. data#list....................................|SpaceVim-api-data-list|
@@ -481,6 +483,24 @@ Enable/Disable filetypeicon column in vimfiler buffer, default is 0.
 The host file url. This option is for Chinese users who can not use Google and
 Twitter.
 
+                                                *g:neomake_echo_current_error*
+neomake/neomake {{{ This setting will echo the error for the line your cursor
+is on, if any.
+
+                                                            *g:ale_echo_delay*
+w0rp/ale {{{
+
+                                                     *g:github_issues_no_omni*
+jaxbot/github-issues.vim {{{ Disable completion by github-issues.vim. Because
+github-complete.vim provides more powerful completion.
+
+                                                          *g:github_dashboard*
+junegunn/vim-github-dashboard {{{
+
+                                                                  *g:dash_map*
+rizzatti/dash.vim {{{ Allows configuration of mappings between Vim filetypes
+and Dash's docsets.
+
 ==============================================================================
 COMMANDS                                                   *SpaceVim-commands*
 
@@ -540,6 +560,16 @@ SpaceVim#logger#setLevel({level})                 *SpaceVim#logger#setLevel()*
 
 SpaceVim#logger#setOutput({file})                *SpaceVim#logger#setOutput()*
   Set the log output file of SpaceVim. Default is empty.
+
+SpaceVim#plugins#iedit#start()                *SpaceVim#plugins#iedit#start()*
+  public API for iedit mode
+>
+    KEY:
+    expr     match expression
+    word     match word
+    stack    cursor pos stack
+<
+  if only argv 1 is given, use selected word as pattern
 
 ==============================================================================
 LAYERS                                                       *SpaceVim-layers*
@@ -740,6 +770,24 @@ FORMAT                                                       *SpaceVim-format*
 
 SpaceVim uses neoformat as the default code format tools. Neoformat uses a
 variety of formatters for many filetypes. for more info see |neoformat|
+
+==============================================================================
+GITHUB                                                 *SpaceVim-layer-github*
+
+This layer provides GitHub integration for SpaceVim
+
+MAPPINGS
+
+>
+  Mode      Key           Function
+  -------------------------------------------------------------
+  normal    SPC g h i     show issues
+  normal    SPC g h a     show activities
+  normal    SPC g h d     show dashboard
+  normal    SPC g h f     show current file in browser
+  normal    SPC g h I     show issues in browser
+  normal    SPC g h p     show PRs in browser
+<
 
 ==============================================================================
 INCSEARCH                                           *SpaceVim-layer-incsearch*
@@ -1108,6 +1156,11 @@ MAPPINGS
   <C-k>     normal      Switch to vim/tmux pane in up direction
   <C-l>     normal      Switch to vim/tmux pane in right direction
 <
+
+==============================================================================
+TOOLS#DASH                                         *SpaceVim-layer-tools-dash*
+
+This layer provides Dash integration for SpaceVim
 
 ==============================================================================
 API                                                             *SpaceVim-api*

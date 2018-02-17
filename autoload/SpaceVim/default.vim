@@ -169,7 +169,9 @@ function! SpaceVim#default#SetMappings() abort
 
   " Save a file with sudo
   " http://forrst.com/posts/Use_w_to_sudo_write_a_file_with_Vim-uAN
+  " use w!! in cmdline or use W command to sudo write a file
   cnoremap w!! %!sudo tee > /dev/null %
+  command! W w !sudo tee % > /dev/null
 
 
   " Use Ctrl+* to jump between windows
@@ -214,7 +216,7 @@ function! SpaceVim#default#SetMappings() abort
 
   " Improve scroll, credits: https://github.com/Shougo
   nnoremap <expr> zz (winline() == (winheight(0)+1) / 2) ?
-        \ 'zt' : (winline() == 1) ? 'zb' : 'zz'
+        \ 'zt' : (winline() == &scrolloff + 1) ? 'zb' : 'zz'
   noremap <expr> <C-f> max([winheight(0) - 2, 1])
         \ ."\<C-d>".(line('w$') >= line('$') ? "L" : "H")
   noremap <expr> <C-b> max([winheight(0) - 2, 1])
