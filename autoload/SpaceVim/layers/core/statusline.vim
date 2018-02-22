@@ -1,10 +1,10 @@
-" ============================================================================
-" File:        statusline.vim
-" Description: SpaceVim core#statusline layer
-" Author:      Shidong Wang <wsdjeg@outlook.com>
-" Website:     https://spacevim.org
-" License:     GPLv3
-" ============================================================================
+"=============================================================================
+" statusline.vim --- SpaceVim statusline
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
 
 " statusline
 scriptencoding utf-8
@@ -208,8 +208,8 @@ if g:spacevim_enable_neomake
     let counts = neomake#statusline#LoclistCounts()
     let warnings = get(counts, 'W', 0)
     let errors = get(counts, 'E', 0)
-    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
-    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
+    let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
     return l
   endfunction
 elseif g:spacevim_enable_ale
@@ -220,8 +220,8 @@ elseif g:spacevim_enable_ale
     let counts = ale#statusline#Count(bufnr(''))
     let warnings = counts.warning + counts.style_warning
     let errors = counts.error + counts.style_error
-    let l =  warnings ? ' %#SpaceVim_statusline_warn#●' . warnings . ' ' : ''
-    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#●' . errors  . ' ' : ''
+    let l =  warnings ? '%#SpaceVim_statusline_warn# ● ' . warnings . ' ' : ''
+    let l .=  errors ? (warnings ? '' : ' ') . '%#SpaceVim_statusline_error#● ' . errors  . ' ' : ''
     return l
   endfunction
 else
@@ -359,9 +359,10 @@ function! SpaceVim#layers#core#statusline#get(...) abort
           \ . '%#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep . ' '
           \ . '%#SpaceVim_statusline_c# %{unite#get_status_string()} '
   elseif &filetype ==# 'SpaceVimFlyGrep'
-    return '%#SpaceVim_statusline_a_bold# FlyGrep%{SpaceVim#plugins#flygrep#mode()} %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
-          \ . '%#SpaceVim_statusline_b# %{getcwd()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
-          \ . '%#SpaceVim_statusline_c# %{SpaceVim#plugins#flygrep#lineNr()}'
+    return '%#SpaceVim_statusline_a_bold# FlyGrep %#SpaceVim_statusline_a_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# %{SpaceVim#plugins#flygrep#mode()} %#SpaceVim_statusline_b_SpaceVim_statusline_c#' . s:lsep
+          \ . '%#SpaceVim_statusline_c# %{getcwd()} %#SpaceVim_statusline_c_SpaceVim_statusline_b#' . s:lsep
+          \ . '%#SpaceVim_statusline_b# %{SpaceVim#plugins#flygrep#lineNr()} %#SpaceVim_statusline_b_SpaceVim_statusline_z#' . s:lsep
   elseif &filetype ==# 'TransientState'
     return '%#SpaceVim_statusline_a# Transient State %#SpaceVim_statusline_a_SpaceVim_statusline_b#'
   elseif &filetype ==# 'vimcalc'

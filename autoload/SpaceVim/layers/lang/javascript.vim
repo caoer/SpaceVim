@@ -1,12 +1,20 @@
+"=============================================================================
+" javascript.vim --- SpaceVim lang#javascript layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 function! SpaceVim#layers#lang#javascript#plugins() abort
   let plugins = [
-     \ ['MaxMEllon/vim-jsx-pretty', { 'on_ft': 'javascript' }],
      \ ['Galooshi/vim-import-js', {
      \ 'on_ft': 'javascript', 'build' : 'npm install -g import-js' }],
      \ ['heavenshell/vim-jsdoc', { 'on_cmd': 'JsDoc' }],
      \ ['maksimr/vim-jsbeautify', { 'on_ft': 'javascript' }],
      \ ['mmalecki/vim-node.js', { 'on_ft': 'javascript' }],
      \ ['moll/vim-node', { 'on_ft': 'javascript' }],
+     \ ['neoclide/vim-jsx-improve', { 'on_ft': 'javascript' }],
      \ ['othree/es.next.syntax.vim', { 'on_ft': 'javascript' }],
      \ ['othree/javascript-libraries-syntax.vim', {
      \ 'on_ft': ['javascript', 'coffee', 'ls', 'typescript'] }],
@@ -146,10 +154,6 @@ function! SpaceVim#layers#lang#javascript#config() abort
   let g:javascript_plugin_flow = 1
   " }}}
 
-  " MaxMEllon/vim-jsx-pretty {{{
-  let g:vim_jsx_pretty_colorful_config = 1
-  " }}}
-
   call SpaceVim#plugins#runner#reg_runner('javascript', 'node %s')
   call SpaceVim#mapping#space#regesit_lang_mappings('javascript',
         \ function('s:on_ft'))
@@ -166,20 +170,19 @@ function! SpaceVim#layers#lang#javascript#config() abort
     let g:neomake_javascript_enabled_makers = ['eslint']
     " Use the fix option of eslint
     let g:neomake_javascript_eslint_args = ['-f', 'compact', '--fix']
-
-    augroup Spacevim_lang_javascript
-      autocmd!
-      autocmd User NeomakeFinished checktime
-      autocmd FocusGained * checktime
-    augroup END
   endif
   
-  if s:use_local_eslint
-    augroup Spacevim_lang_javascript
+  augroup SpaceVim_lang_javascript
+    autocmd!
+    autocmd FileType javascript setlocal foldmethod=syntax
+    if s:auto_fix
+      autocmd User NeomakeFinished checktime
+      autocmd FocusGained * checktime
+    endif
+    if s:use_local_eslint
       autocmd BufNewFile,BufRead *.js call s:preferLocalEslint()
-    augroup END
-  endif
-
+    endif
+  augroup END
 endfunction
 
 function! s:on_ft() abort

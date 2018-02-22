@@ -1,3 +1,11 @@
+"=============================================================================
+" checkers.vim --- SpaceVim checkers layer
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 ""
 " @section checkers, layer-checkers
 " @parentsection layers
@@ -20,7 +28,11 @@ function! SpaceVim#layers#checkers#plugins() abort
   return plugins
 endfunction
 
-let s:show_cursor_error = 1
+if has('timers')
+  let s:show_cursor_error = 1
+else
+  let s:show_cursor_error = 0
+endif
 
 function! SpaceVim#layers#checkers#set_variable(var) abort
 

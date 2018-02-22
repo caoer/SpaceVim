@@ -1,3 +1,11 @@
+"=============================================================================
+" issue.vim --- issue reporter for SpaceVim
+" Copyright (c) 2016-2017 Wang Shidong & Contributors
+" Author: Wang Shidong < wsdjeg at 163.com >
+" URL: https://spacevim.org
+" License: GPLv3
+"=============================================================================
+
 let s:CMP = SpaceVim#api#import('vim#compatible')
 
 function! SpaceVim#issue#report() abort
@@ -7,7 +15,9 @@ endfunction
 function! s:open() abort
   exe 'tabnew ' . tempname() . '/issue_report.md'
   let b:spacevim_issue_template = 1
-  call setline(1, s:template())
+  let template = s:template()
+  call setline(1, template)
+  let @+ = join(template, "\n")
   w
 endfunction
 
