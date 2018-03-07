@@ -4,6 +4,7 @@
 [Documentation](http://spacevim.org/documentation/) \|
 [Twitter](https://twitter.com/SpaceVim) \|
 [Community](https://spacevim.org/community/) \|
+[Sponsors](http://spacevim.org/sponsors/) \|
 [Gitter **Chat**](https://gitter.im/SpaceVim/SpaceVim) \|
 [中文官网](http://spacevim.org/cn/)
 
@@ -104,11 +105,15 @@ The easist way is to download [install.cmd](https://spacevim.org/install.cmd) an
 ### Project layout
 
 ```txt
-├─ autoload/SpaceVim/api/         APIs
-├─ autoload/SpaceVim/layers/      layers
-├─ autoload/SpaceVim/plugins/     plugins
+├─ .ci/                           build automation
+├─ .github/                       issue/PR templates
+├─ .SpaceVim.d/                   project specific configuration
+├─ autoload/SpaceVim.vim          SpaceVim core file
+├─ autoload/SpaceVim/api/         Public APIs
+├─ autoload/SpaceVim/layers/      available layers
+├─ autoload/SpaceVim/plugins/     buildin plugins
 ├─ autoload/SpaceVim/mapping/     mapping guide
-├─ doc/SpaceVim.txt               help
+├─ doc/                           help(cn/en)
 ├─ docs/                          website(cn/en)
 ├─ wiki/                          wiki(cn/en)
 ├─ bin/                           executeable
@@ -126,17 +131,18 @@ For more info please check our [development guidelines](http://spacevim.org/deve
 If you want to show your support financially you can buy a drink for the maintainer by
 clicking following icon.
 
-<a href='https://ko-fi.com/A538L6H' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+<a href='https://ko-fi.com/spacevim' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=f' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 
 | wechat                                                                   | alipay                                                                     |
 | ------------------------------------------------------------------------ | -------------------------------------------------------------------------- |
-| <img src="https://spacevim.org/img/weixin.png" height="150" width="150"> | <img src="https://spacevim.org/img/zhifubao.png" height="150" width="150"> |
+| <a href='#support-spacevim'><img src="https://spacevim.org/img/weixin.png" height="150" width="150" /></a> | <a href='#support-spacevim'><img src="https://spacevim.org/img/zhifubao.png" height="150" width="150" /></a> |
 
 Bitcoin: 1DtuVeg81c2L9NEhDaVTAAbrCR3pN5xPFv
 
 ### Credits & Thanks
 
-- [![GitHub contributors](https://img.shields.io/github/contributors/SpaceVim/SpaceVim.svg)](https://github.com/SpaceVim/SpaceVim/graphs/contributors)
+This project exists thanks to all the people who have [contributed](CONTRIBUTING.md):
+<a href="https://github.com/SpaceVim/SpaceVim/graphs/contributors"><img src="https://opencollective.com/spacevim/contributors.svg?width=890&button=false" /></a>
 - [@Gabirel](https://github.com/Gabirel) and his [Hack-SpaceVim](https://github.com/Gabirel/Hack-SpaceVim)
 - [@everettjf](https://github.com/everettjf) and his [SpaceVimTutorial](https://everettjf.gitbooks.io/spacevimtutorial/content/)
 - [vimdoc](https://github.com/google/vimdoc) generate doc file for SpaceVim

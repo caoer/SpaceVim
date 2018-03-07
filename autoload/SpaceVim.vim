@@ -24,11 +24,14 @@
 " settings in `.SpaceVim.d/init.vim` in the root directory of your project.
 " `.SpaceVim.d/` will also be added to runtimepath.
 
+" Public SpaceVim Options {{{
+scriptencoding utf-8
+
 ""
 " Version of SpaceVim , this value can not be changed.
-scriptencoding utf-8
 let g:spacevim_version = '0.7.0-dev'
 lockvar g:spacevim_version
+
 ""
 " Change the default indentation of SpaceVim. Default is 2.
 " >
@@ -325,7 +328,7 @@ let g:spacevim_filemanager             = 'vimfiler'
 let g:spacevim_plugin_manager          = 'dein'
 ""
 " Set the max process of SpaceVim plugin manager
-let g:spacevim_plugin_manager_max_processes = 8
+let g:spacevim_plugin_manager_max_processes = 16
 ""
 " Enable/Disable checkinstall on SpaceVim startup. Default is 1.
 " >
@@ -346,7 +349,6 @@ let g:spacevim_auto_disable_touchpad   = 1
 " |SpaceVim#logger#setLevel()|
 let g:spacevim_debug_level             = 1
 let g:spacevim_hiddenfileinfo          = 1
-let g:spacevim_plugin_groups_exclude   = []
 let g:spacevim_gitcommit_pr_icon       = ''
 let g:spacevim_gitcommit_issue_icon    = ''
 ""
@@ -378,12 +380,6 @@ let g:spacevim_enable_tabline_filetype_icon = 0
 ""
 " Enable/Disable os fileformat icon. default is 0.
 let g:spacevim_enable_os_fileformat_icon = 0
-""
-" Plugin groups to be loaded.
-" >
-"    let g:spacevim_plugin_groups = ['core', 'lang']
-" <
-let g:spacevim_plugin_groups           = []
 ""
 " Set the github username, It will be used for getting your starred repos, and
 " fuzzy find the repo you want.
@@ -480,9 +476,12 @@ let g:spacevim_wildignore
       \ = '*/tmp/*,*.so,*.swp,*.zip,*.class,tags,*.jpg,
       \*.ttf,*.TTF,*.png,*/target/*,
       \.git,.svn,.hg,.DS_Store,*.svg'
-" privite options
+
+" }}}
+
+
+" Privite SpaceVim options
 let g:_spacevim_mappings = {}
-" TODO merge leader guide
 let g:_spacevim_mappings_space_custom = []
 let g:_spacevim_mappings_space_custom_group_name = []
 
@@ -597,6 +596,8 @@ endfunction
 
 function! SpaceVim#end() abort
 
+  call SpaceVim#server#connect()
+
   if g:spacevim_enable_neocomplcache
     let g:spacevim_autocomplete_method = 'neocomplcache'
   endif
@@ -628,29 +629,23 @@ function! SpaceVim#end() abort
     let g:leaderGuide_map = {}
     call SpaceVim#mapping#guide#register_prefix_descriptions('', 'g:leaderGuide_map')
   endif
-  if g:spacevim_simple_mode
-    let g:spacevim_plugin_groups = ['core']
-  else
-    for s:group in g:spacevim_plugin_groups_exclude
-      let s:i = index(g:spacevim_plugin_groups, s:group)
-      if s:i != -1
-        call remove(g:spacevim_plugin_groups, s:i)
-      endif
-    endfor
-    if g:spacevim_vim_help_language ==# 'cn'
-      call add(g:spacevim_plugin_groups, 'chinese')
-    elseif g:spacevim_vim_help_language ==# 'ja'
-      call add(g:spacevim_plugin_groups, 'japanese')
-    endif
-    if g:spacevim_use_colorscheme==1
-      call add(g:spacevim_plugin_groups, 'colorscheme')
-    endif
-
+  if g:spacevim_vim_help_language ==# 'cn'
+    call SpaceVim#layers#load('chinese')
+  elseif g:spacevim_vim_help_language ==# 'ja'
+    call SpaceVim#layers#load('japanese')
   endif
+  if g:spacevim_use_colorscheme==1
+    call SpaceVim#layers#load('colorscheme')
+  endif
+
   ""
   " generate tags for SpaceVim
-  let help = fnamemodify(g:Config_Main_Home, ':p:h:h') . '/doc'
-  exe 'helptags ' . help
+  let help = fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/doc'
+  try
+    exe 'helptags ' . help
+  catch
+    call SpaceVim#logger#warn('Failed to generate helptags for SpaceVim')
+  endtry
 
   ""
   " set language
@@ -658,12 +653,14 @@ function! SpaceVim#end() abort
     silent exec 'lan ' . g:spacevim_language
   endif
 
-  if index(g:spacevim_plugin_groups, 'core#statusline') != -1
+  if SpaceVim#layers#isLoaded('core#statusline')
     call SpaceVim#layers#core#statusline#init()
   endif
 
   if !g:spacevim_relativenumber
     set norelativenumber
+  else
+    set relativenumber
   endif
 
   let &shiftwidth = g:spacevim_default_indent
@@ -674,19 +671,64 @@ function! SpaceVim#end() abort
   endif
   let g:leaderGuide_max_size = 15
   call SpaceVim#plugins#load()
+
+  call SpaceVim#plugins#projectmanager#RootchandgeCallback()
+
+  call zvim#util#source_rc('general.vim')
+
+
+
+  call SpaceVim#autocmds#init()
+
+  if has('nvim')
+    call zvim#util#source_rc('neovim.vim')
+  endif
+
+  call zvim#util#source_rc('commands.vim')
+  filetype plugin indent on
+  syntax on
 endfunction
 
 
-function! SpaceVim#default() abort
-  call SpaceVim#default#SetOptions()
-  call SpaceVim#default#SetPlugins()
-  call SpaceVim#default#SetMappings()
+function! SpaceVim#begin() abort
+
+  call zvim#util#source_rc('functions.vim')
+  call zvim#util#source_rc('init.vim')
+
+  " Before loading SpaceVim, We need to parser argvs.
+  function! s:parser_argv() abort
+    if !argc()
+      return [1, getcwd()]
+    elseif argv(0) =~# '/$'
+      let f = expand(argv(0))
+      if isdirectory(f)
+        return [1, f]
+      else
+        return [1, getcwd()]
+      endif
+    elseif argv(0) ==# '.'
+      return [1, getcwd()]
+    elseif isdirectory(expand(argv(0)))
+      return [1, expand(argv(0)) ]
+    else
+      return [0]
+    endif
+  endfunction
+  let s:status = s:parser_argv()
+
+  " If do not start Vim with filename, Define autocmd for opening welcome page
+  if s:status[0]
+    let g:_spacevim_enter_dir = s:status[1]
+    augroup SPwelcome
+      au!
+      autocmd VimEnter * call SpaceVim#welcome()
+    augroup END
+  endif
+  call SpaceVim#default#options()
+  call SpaceVim#default#layers()
+  call SpaceVim#default#keyBindings()
   call SpaceVim#commands#load()
 endfunction
-
-function! SpaceVim#defindFuncs() abort
-endfunction
-
 
 function! SpaceVim#welcome() abort
   if get(g:, '_spacevim_session_loaded', 0) == 1

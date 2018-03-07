@@ -21,18 +21,18 @@ CONTENTS                                                   *SpaceVim-contents*
   3. Commands..............................................|SpaceVim-commands|
   4. Functions............................................|SpaceVim-functions|
   5. Layers..................................................|SpaceVim-layers|
-      1. Default............................................|SpaceVim-default|
-      2. autocomplete..................................|SpaceVim-autocomplete|
-      3. checkers....................................|SpaceVim-layer-checkers|
-      4. colorscheme....................................|SpaceVim-colorscheme|
-      5. core#tabline............................|SpaceVim-layer-core-tabline|
-      6. exprfold....................................|SpaceVim-layer-exprfold|
-      7. format..............................................|SpaceVim-format|
-      8. github........................................|SpaceVim-layer-github|
-      9. incsearch..................................|SpaceVim-layer-incsearch|
-      10. indentmove...............................|SpaceVim-layer-indentmove|
-      11. lang#c.......................................|SpaceVim-layer-lang-c|
-      12. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      1. autocomplete..................................|SpaceVim-autocomplete|
+      2. checkers....................................|SpaceVim-layer-checkers|
+      3. colorscheme....................................|SpaceVim-colorscheme|
+      4. core#tabline............................|SpaceVim-layer-core-tabline|
+      5. exprfold....................................|SpaceVim-layer-exprfold|
+      6. format..............................................|SpaceVim-format|
+      7. github........................................|SpaceVim-layer-github|
+      8. incsearch..................................|SpaceVim-layer-incsearch|
+      9. indentmove................................|SpaceVim-layer-indentmove|
+      10. lang#c.......................................|SpaceVim-layer-lang-c|
+      11. lang#crystal...........................|SpaceVim-layer-lang-crystal|
+      12. lang#csharp.............................|SpaceVim-layer-lang-csharp|
       13. lang#elixir.............................|SpaceVim-layer-lang-elixir|
       14. lang#go.....................................|SpaceVim-layer-lang-go|
       15. lang#java.................................|SpaceVim-layer-lang-java|
@@ -76,6 +76,9 @@ be added to runtimepath, so you can write your own scripts in it. SpaceVim
 also supports local config for each project. Place local config  settings in
 `.SpaceVim.d/init.vim` in the root directory of your project. `.SpaceVim.d/`
 will also be added to runtimepath.
+
+                                                          *g:spacevim_version*
+Version of SpaceVim , this value can not be changed.
 
                                                    *g:spacevim_default_indent*
 Change the default indentation of SpaceVim. Default is 2.
@@ -403,12 +406,6 @@ Enable/Disable tabline filetype icon. default is 0.
                                         *g:spacevim_enable_os_fileformat_icon*
 Enable/Disable os fileformat icon. default is 0.
 
-                                                    *g:spacevim_plugin_groups*
-Plugin groups to be loaded.
->
-   let g:spacevim_plugin_groups = ['core', 'lang']
-<
-
                                                   *g:spacevim_github_username*
 Set the github username, It will be used for getting your starred repos, and
 fuzzy find the repo you want.
@@ -577,15 +574,12 @@ LAYERS                                                       *SpaceVim-layers*
   SpaceVim support such layers:
 
 ==============================================================================
-DEFAULT                                                     *SpaceVim-default*
-
-==============================================================================
 AUTOCOMPLETE                                           *SpaceVim-autocomplete*
 
 CODE COMPLETION
 SpaceVim uses neocomplete as the default completion engine if vim has lua
 support. If there is no lua support, neocomplcache will be used for the
-completion engine. Spacevim uses deoplete as the default completion engine for
+completion engine. SpaceVim uses deoplete as the default completion engine for
 neovim. Deoplete requires neovim to be compiled with python support. For more
 information on python support, please read neovim's |provider-python|.
 
@@ -880,6 +874,32 @@ LANG#CRYSTAL                                     *SpaceVim-layer-lang-crystal*
 INTRO
 The lang#crystal layer provides crystal filetype detection and syntax
 highlight, crystal tool and crystal spec integration.
+
+==============================================================================
+LANG#CSHARP                                       *SpaceVim-layer-lang-csharp*
+
+This layer includes utilities and language-specific mappings for csharp
+development.
+
+KEY MAPPINGS
+
+>
+  Mode            Key             Function
+  ---------------------------------------------
+  normal          SPC l b         compile the project
+  normal          SPC l f         format current file
+  normal          SPC l d         show doc
+  normal          SPC l e         rename symbol under cursor
+  normal          SPC l g g       go to definition
+  normal          SPC l g i       find implementations
+  normal          SPC l g t       find type
+  normal          SPC l g s       find symbols
+  normal          SPC l g u       find usages of symbol under cursor
+  normal          SPC l g m       find members in the current buffer
+  normal          SPC l s r       reload the solution
+  normal          SPC l s s       start the OmniSharp server
+  normal          SPC l s S       stop the OmniSharp server
+<
 
 ==============================================================================
 LANG#ELIXIR                                       *SpaceVim-layer-lang-elixir*
