@@ -29,7 +29,7 @@ scriptencoding utf-8
 
 ""
 " Version of SpaceVim , this value can not be changed.
-let g:spacevim_version = '0.7.0-dev'
+let g:spacevim_version = '0.8.0-dev'
 lockvar g:spacevim_version
 
 ""
@@ -69,7 +69,7 @@ let g:spacevim_windows_leader          = 's'
 ""
 " Unite work flow leader of SpaceVim. Default is `f`.
 " Set to empty to disable this feature, or you can set to another char.
-let g:spacevim_unite_leader            = 'f'
+let g:spacevim_unite_leader            = '\f'
 ""
 " Denite work flow leader of SpaceVim. Default is `F`.
 " Set to empty to disable this feature, or you can set to another char.
@@ -200,7 +200,7 @@ let g:spacevim_statusline_inactive_separator = 'arrow'
 " <
 let g:spacevim_statusline_left_sections = ['winnr', 'filename', 'major mode',
       \ 'syntax checking', 'minor mode lighters',
-      \ 'version control info', 'hunks']
+      \ ]
 ""
 " Define the right section of statusline in active windows. By default:
 " >
@@ -281,7 +281,6 @@ let g:spacevim_info_symbol             = SpaceVim#api#import('messletters').circ
 "   set -ga terminal-overrides ',*:Ss=\E[%p1%d q:Se=\E[2 q'
 " <
 let g:spacevim_terminal_cursor_shape = 2
-let g:spacevim_use_colorscheme         = 1
 ""
 " Set the help language of vim. Default is 'en'. 
 " You can change it to Chinese.
@@ -614,15 +613,8 @@ function! SpaceVim#end() abort
   if !empty(g:spacevim_windows_leader)
     call SpaceVim#mapping#leader#defindWindowsLeader(g:spacevim_windows_leader)
   endif
-  if !empty(g:spacevim_unite_leader)
-    call SpaceVim#mapping#leader#defindUniteLeader(g:spacevim_unite_leader)
-  endif
-  if !empty(g:spacevim_denite_leader)
-    call SpaceVim#mapping#leader#defindDeniteLeader(g:spacevim_denite_leader)
-  endif
   call SpaceVim#mapping#g#init()
   call SpaceVim#mapping#z#init()
-  call SpaceVim#mapping#leader#defindglobalMappings()
   call SpaceVim#mapping#leader#defindKEYs()
   call SpaceVim#mapping#space#init()
   if !SpaceVim#mapping#guide#has_configuration()
@@ -634,10 +626,6 @@ function! SpaceVim#end() abort
   elseif g:spacevim_vim_help_language ==# 'ja'
     call SpaceVim#layers#load('japanese')
   endif
-  if g:spacevim_use_colorscheme==1
-    call SpaceVim#layers#load('colorscheme')
-  endif
-
   ""
   " generate tags for SpaceVim
   let help = fnamemodify(g:_spacevim_root_dir, ':p:h:h') . '/doc'

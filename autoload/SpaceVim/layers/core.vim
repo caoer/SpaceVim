@@ -10,19 +10,36 @@ function! SpaceVim#layers#core#plugins() abort
   let plugins = []
   if g:spacevim_filemanager ==# 'nerdtree'
     call add(plugins, ['scrooloose/nerdtree', { 'on_cmd' : 'NERDTreeToggle',
-        \ 'loadconf' : 1}])
+          \ 'loadconf' : 1}])
+    call add(plugins, ['Xuyuanp/nerdtree-git-plugin', {'merged' : 0}])
   elseif g:spacevim_filemanager ==# 'vimfiler'
     call add(plugins, ['Shougo/vimfiler.vim',{'merged' : 0, 'loadconf' : 1 , 'loadconf_before' : 1, 'on_cmd' : ['VimFiler', 'VimFilerBufferDir']}])
     call add(plugins, ['Shougo/unite.vim',{ 'merged' : 0 , 'loadconf' : 1}])
     call add(plugins, ['Shougo/vimproc.vim', {'build' : ['make']}])
   endif
   call add(plugins, ['benizi/vim-automkdir'])
+
+  call add(plugins, ['rhysd/clever-f.vim'])
+
+  call add(plugins, ['andymass/vim-matchup'])
+  call add(plugins, ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}])
+  call add(plugins, ['tyru/open-browser.vim', {
+        \'on_cmd' : ['OpenBrowserSmartSearch', 'OpenBrowser',
+        \ 'OpenBrowserSearch'],
+        \'on_map' : '<Plug>(openbrowser-',
+        \ 'loadconf' : 1,
+        \}])
+  call add(plugins, ['tpope/vim-projectionist',         { 'on_cmd' : ['A', 'AS', 'AV',
+        \ 'AT', 'AD', 'Cd', 'Lcd', 'ProjectDo']}])
+  call add(plugins, ['mhinz/vim-grepper' ,              { 'on_cmd' : 'Grepper',
+        \ 'loadconf' : 1} ])
   return plugins
 endfunction
 
 let s:filename = expand('<sfile>:~')
 let s:lnum = expand('<slnum>') + 2
 function! SpaceVim#layers#core#config() abort
+  let g:matchup_matchparen_status_offscreen = 0
   " Unimpaired bindings
   " Quickly add empty lines
   nnoremap <silent> [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>
@@ -210,9 +227,9 @@ function! SpaceVim#layers#core#config() abort
   if has('python3')
     let cmd =  'Denite file_rec'
   elseif has('python')
-    let cmd =  "LeaderfFile"
+    let cmd =  'LeaderfFile'
   else
-    let cmd =  "CtrlP"
+    let cmd =  'CtrlP'
   endif
   call SpaceVim#mapping#space#def('nnoremap', ['p', 'f'],
         \ cmd,
@@ -339,7 +356,7 @@ function! s:previous_window() abort
 endfunction
 
 function! s:split_string(newline) abort
-  let syn_name = synIDattr(synID(line("."), col("."), 1), "name")
+  let syn_name = synIDattr(synID(line('.'), col('.'), 1), 'name')
   if syn_name == &filetype . 'String'
     let c = col('.')
     let sep = ''
@@ -366,7 +383,7 @@ function! s:split_string(newline) abort
 endfunction
 
 function! s:is_string(l,c) abort
-  return synIDattr(synID(a:l, a:c, 1), "name") == &filetype . 'String'
+  return synIDattr(synID(a:l, a:c, 1), 'name') == &filetype . 'String'
 endfunction
 
 " function() wrapper

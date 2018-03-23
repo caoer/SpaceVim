@@ -9,8 +9,6 @@
 function! SpaceVim#layers#git#plugins() abort
   let plugins = [
         \ ['junegunn/gv.vim',      { 'on_cmd' : ['GV']}],
-        \ ['airblade/vim-gitgutter',      { 'merged' : 0}],
-        \ ['tpope/vim-fugitive',   { 'merged' : 0}],
         \ ]
   if has('patch-8.0.0027') || has('nvim')
     call add(plugins, ['lambdalisue/gina.vim', { 'on_cmd' : 'Gina'}])
@@ -42,10 +40,6 @@ function! SpaceVim#layers#git#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'A'], 'Gita add .', 'stage all files', 1)
     call SpaceVim#mapping#space#def('nnoremap', ['g', 'b'], 'Gina blame', 'view git blame', 1)
   endif
-  nmap <leader>hj <plug>(signify-next-hunk)
-  nmap <leader>hk <plug>(signify-prev-hunk)
-  nmap <leader>hJ 9999<leader>gj
-  nmap <leader>hK 9999<leader>gk
   augroup spacevim_layer_git
     autocmd!
     autocmd FileType diff nnoremap <buffer><silent> q :bd!<CR>

@@ -1,18 +1,14 @@
 ---
-title: "SpaceVim denite layer"
-description: "This layers provide a heavily customized Denite centric work-flow"
+title: "SpaceVim fzf layer"
+description: "This layers provide a heavily customized fzf centric work-flow"
 ---
 
-# [SpaceVim Layers:](https://spacevim.org/layers) denite
+# [SpaceVim Layers:](https://spacevim.org/layers) fzf
 
 ## Intro
 
-This layer is a heavily customized warpper for denite and it's sources.
+This layer is a heavily customized warpper for fzf.
 
-
-## Configuration
-
-SpaceVim use `F` as the default customized key bindings prefix for denite layer.
 
 ## Key bindings
 

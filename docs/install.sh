@@ -84,7 +84,7 @@ On_IWhite='\033[0;107m'   # White
 # }}}
 
 # version
-Version='0.6.0'
+Version='0.8.0-dev'
 #System name
 System="$(uname -s)"
 
@@ -93,7 +93,7 @@ System="$(uname -s)"
 # need_cmd {{{
 need_cmd () {
   if ! hash "$1" &>/dev/null; then
-    error "Need '$1' (command not fount)"
+    error "Need '$1' (command not found)"
     exit 1
   fi
 }
@@ -329,7 +329,7 @@ welcome () {
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               | ##                                                           "
     echo_with_color ${Yellow} "               |__/                                                           "
-    echo_with_color ${Yellow} "                      version : 0.7.0-dev       by : spacevim.org             "
+    echo_with_color ${Yellow} "                      version : 0.8.0-dev       by : spacevim.org             "
 }
 
 # }}}

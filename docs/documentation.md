@@ -30,7 +30,6 @@ description: "General documentation about how to using SpaceVim, including the q
   - [File Operations](#file-operations)
   - [Editor UI](#editor-ui)
   - [Native functions](#native-functions)
-  - [Plugin: Unite](#plugin-unite)
   - [Plugin: Bookmarks](#plugin-bookmarks)
   - [Completion](#completion)
     - [Unite/Denite](#unitedenite)
@@ -305,14 +304,6 @@ Move Text Transient State:
 
 ## Differences between vim/neovim and SpaceVim
 
-- The `f` key does find char on the right, but in SpaceVim it is the `Unite` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `f`, you can use an empty string to disable this feature.
-
-the option is `g:spacevim_unite_leader`, default value is `f`.
-
-- The `F` key does find char on the left, but in SpaceVim it is the `Denite` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `F`, you can use an empty string to disable this feature.
-
-the option is `g:spacevim_denite_leader`, default value is `F`.
-
 - The `s` key does replace cursor char, but in SpaceVim it is the `Window` key bindings specific leader key by default (which can be set on another key binding in dotfile). If you still prefer the origin function of `s`, you can use an empty string to disable this feature.
 
 the option is `g:spacevim_windows_leader`, default value is `s`.
@@ -401,7 +392,7 @@ The `core#statusline` layer provide a heavily customized powerline with the foll
 - toggle syntax checking info
 - toggle battery info
 - toggle minor mode lighters
-- show VCS information (branch, hunk summary)
+- show VCS information (branch, hunk summary) (need `git` and `VersionControl` layer)
 
 Reminder of the color codes for the states:
 
@@ -668,35 +659,6 @@ can be get by <kbd><leader> q r</kbd>
 | `<leader>` + `qr?` | Normal | Same as native `q?`, open cmdwin |
 | `<leader>` + `qr:` | Normal | Same as native `q:`, open cmdwin |
 
-### Plugin: Unite
-
-| Key                 |      Mode     | Action                                                     |
-| ------------------- | :-----------: | ---------------------------------------------------------- |
-| `[unite]`           |     Normal    | unite leader, default is `f`, `:h g:spacevim_unite_leader` |
-| `[unite]`+`r`       |     Normal    | Resumes Unite window                                       |
-| `[unite]`+`f`       |     Normal    | Opens Unite file recursive search                          |
-| `[unite]`+`i`       |     Normal    | Opens Unite git file search                                |
-| `[unite]`+`g`       |     Normal    | Opens Unite grep with ag (the_silver_searcher)             |
-| `[unite]`+`u`       |     Normal    | Opens Unite source                                         |
-| `[unite]`+`t`       |     Normal    | Opens Unite tag                                            |
-| `[unite]`+`T`       |     Normal    | Opens Unite tag/include                                    |
-| `[unite]`+`l`       |     Normal    | Opens Unite location list                                  |
-| `[unite]`+`q`       |     Normal    | Opens Unite quick fix                                      |
-| `[unite]`+`e`       |     Normal    | Opens Unite register                                       |
-| `[unite]`+`j`       |     Normal    | Opens Unite jump, change                                   |
-| `[unite]`+`h`       |     Normal    | Opens Unite history/yank                                   |
-| `[unite]`+`s`       |     Normal    | Opens Unite session                                        |
-| `[unite]`+`n`       |     Normal    | Opens Unite session/new                                    |
-| `[unite]`+`o`       |     Normal    | Opens Unite outline                                        |
-| `[unite]`+`c`       |     Normal    | Opens Unite buffer bookmark file in current directory      |
-| `[unite]`+`b`       |     Normal    | Opens Unite buffer bookmark file in buffer directory       |
-| `[unite]`+`ma`      |     Normal    | Opens Unite mapping                                        |
-| `[unite]`+`<space>` |     Normal    | Opens Unite menu:CustomKeyMaps                             |
-| `[unite]`+`me`      |     Normal    | Opens Unite output messages                                |
-| `<leader>`+`bl`     |     Normal    | Opens Unite buffers, mru, bookmark                         |
-| `<leader>`+`ta`     |     Normal    | Opens Unite tab                                            |
-| `<leader>`+`ugf`    |     Normal    | Opens Unite file with word at cursor                       |
-| `<leader>`+`ugt`    | Normal/visual | Opens Unite tag with word at cursor                        |
 
 ### Plugin: Bookmarks
 
@@ -850,29 +812,29 @@ Similar to easymotion or `f` in vimperator for firefox, this mode allows one to 
 
 #### Unimpaired bindings
 
-| Mappings | Description                      |
-| -------- | -------------------------------- |
-| `[ SPC`  | Insert space above               |
-| `] SPC`  | Insert space below               |
-| `[ b`    | Go to previous buffer            |
-| `] b`    | Go to next buffer                |
-| `[ f`    | Go to previous file in directory |
-| `] f`    | Go to next file in directory     |
-| `[ l`    | Go to the previous error         |
-| `] l`    | Go to the next error             |
-| `[ c`    | Go to the previous vcs hunk      |
-| `] c`    | Go to the next vcs hunk          |
-| `[ q`    | Go to the previous error         |
-| `] q`    | Go to the next error             |
-| `[ t`    | Go to the previous frame         |
-| `] t`    | Go to the next frame             |
-| `[ w`    | Go to the previous window        |
-| `] w`    | Go to the next window            |
-| `[ e`    | Move line up                     |
-| `] e`    | Move line down                   |
-| `[ p`    | Paste above current line         |
-| `] p`    | Paste below current line         |
-| `g p`    | Select pasted text               |
+| Mappings | Description                                             |
+| -------- | ------------------------------------------------------- |
+| `[ SPC`  | Insert space above                                      |
+| `] SPC`  | Insert space below                                      |
+| `[ b`    | Go to previous buffer                                   |
+| `] b`    | Go to next buffer                                       |
+| `[ f`    | Go to previous file in directory                        |
+| `] f`    | Go to next file in directory                            |
+| `[ l`    | Go to the previous error                                |
+| `] l`    | Go to the next error                                    |
+| `[ c`    | Go to the previous vcs hunk (need VersionControl layer) |
+| `] c`    | Go to the next vcs hunk (need VersionControl layer)     |
+| `[ q`    | Go to the previous error                                |
+| `] q`    | Go to the next error                                    |
+| `[ t`    | Go to the previous frame                                |
+| `] t`    | Go to the next frame                                    |
+| `[ w`    | Go to the previous window                               |
+| `] w`    | Go to the next window                                   |
+| `[ e`    | Move line up                                            |
+| `] e`    | Move line down                                          |
+| `[ p`    | Paste above current line                                |
+| `] p`    | Paste below current line                                |
+| `g p`    | Select pasted text                                      |
 
 #### Jumping, Joining and Splitting
 

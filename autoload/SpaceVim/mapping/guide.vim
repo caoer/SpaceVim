@@ -102,7 +102,7 @@ function! s:start_parser(key, dict) " {{{
     endif
     let mapd.display = s:format_displaystring(mapd.rhs)
     let mapd.lhs = substitute(mapd.lhs, key, "", "")
-    let mapd.lhs = substitute(mapd.lhs, "<Space>", " ", "g")
+    " let mapd.lhs = substitute(mapd.lhs, "<Space>", " ", "g")
     let mapd.lhs = substitute(mapd.lhs, "<Tab>", "<C-I>", "g")
     let mapd.rhs = substitute(mapd.rhs, "<SID>", "<SNR>".mapd['sid']."_", "g")
     if mapd.lhs != '' && mapd.display !~# 'LeaderGuide.*'
@@ -619,15 +619,6 @@ else
         \ 'g:_spacevim_mappings_space')
   call SpaceVim#plugins#help#regist_root({'SPC' : g:_spacevim_mappings_space})
 endif
-call SpaceVim#mapping#guide#register_prefix_descriptions(
-      \ g:spacevim_unite_leader,
-      \ 'g:_spacevim_mappings_unite')
-call SpaceVim#plugins#help#regist_root({'[unite]' : g:_spacevim_mappings_unite})
-
-call SpaceVim#mapping#guide#register_prefix_descriptions(
-      \ g:spacevim_denite_leader,
-      \ 'g:_spacevim_mappings_denite')
-call SpaceVim#plugins#help#regist_root({'[denite]' : g:_spacevim_mappings_denite})
 call SpaceVim#mapping#guide#register_prefix_descriptions(
       \ g:spacevim_windows_leader,
       \ 'g:_spacevim_mappings_windows')

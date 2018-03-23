@@ -7,7 +7,7 @@ lang: cn
 [![Build Status](https://travis-ci.org/SpaceVim/SpaceVim.svg?branch=dev)](https://travis-ci.org/SpaceVim/SpaceVim)
 [![Build status](https://ci.appveyor.com/api/projects/status/eh3t5oph70abp665/branch/dev?svg=true)](https://ci.appveyor.com/project/wsdjeg/spacevim/branch/dev)
 [![codecov](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev/graph/badge.svg)](https://codecov.io/gh/SpaceVim/SpaceVim/branch/dev)
-[![Version](https://img.shields.io/badge/version-0.7.0--dev-FF00CC.svg)](https://github.com/SpaceVim/SpaceVim/releases)
+[![Version](https://img.shields.io/badge/version-0.8.0--dev-FF69B4.svg)](https://github.com/SpaceVim/SpaceVim/releases)
 [![GPLv3 License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/SpaceVim/SpaceVim/blob/dev/LICENSE)
 [![QQ](https://img.shields.io/badge/QQ群-121056965-blue.svg)](https://jq.qq.com/?_wv=1027&k=43DB6SG)
 [![Weibo](https://img.shields.io/badge/Weibo-%40SpaceVim-orange.svg)](https://weibo.com/SpaceVim)
@@ -15,9 +15,11 @@ lang: cn
 
 ![welcome-page](https://user-images.githubusercontent.com/13142418/33793078-3446cb6e-dc76-11e7-9998-376a355557a4.png)
 
-项 目 主 页： <https://spacevim.org>
+官 网： <https://spacevim.org>
 
-Github 地址 : <https://github.com/SpaceVim/SpaceVim>
+Github : <https://github.com/SpaceVim/SpaceVim>
+
+码 云 : <https://gitee.com/SpaceVim/SpaceVim>
 
 SpaceVim 是一个社区驱动的模块化 vim/neovim 配置集合，以模块的方式组织管理插件以
 及相关配置，为不同的语言开发量身定制了相关的开发模块，该模块提供代码自动补全，

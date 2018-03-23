@@ -149,7 +149,6 @@
 
 function! SpaceVim#layers#colorscheme#plugins() abort
     return [
-                \ ['morhetz/gruvbox', {'loadconf' : 1, 'merged' : 0}],
                 \ ['kristijanhusak/vim-hybrid-material', { 'merged' : 0 }],
                 \ ['altercation/vim-colors-solarized', { 'merged' : 0 }],
                 \ ['nanotech/jellybeans.vim', { 'merged' : 0 }],
@@ -192,7 +191,6 @@ function! SpaceVim#layers#colorscheme#config() abort
     call SpaceVim#mapping#space#def('nnoremap', ['T', 'n'],
                 \ 'call call(' . string(s:_function('s:cycle_spacevim_theme'))
                 \ . ', [])', 'cycle-spacevim-theme', 1)
-    call SpaceVim#mapping#space#def('nnoremap', ['T', 's'], 'Unite colorscheme', 'unite-colorschemes', 1)
 endfunction
 
 

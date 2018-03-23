@@ -16,9 +16,8 @@ function! SpaceVim#layers#ui#plugins() abort
         \ ['lvht/tagbar-markdown',{'merged' : 0}],
         \ ['t9md/vim-choosewin', {'merged' : 0}],
         \ ['mhinz/vim-startify', {'loadconf' : 1, 'merged' : 0}],
-        \ ['blueyed/vim-diminactive', {'merged' : 0}],
         \ ]
-  if get(g:, '_spacevim_statusline_loaded', 0) == 0
+  if !SpaceVim#layers#isLoaded('core#statusline')
     call add(plugins, ['vim-airline/vim-airline',                { 'merged' : 0, 
           \ 'loadconf' : 1}])
     call add(plugins, ['vim-airline/vim-airline-themes',         { 'merged' : 0}])
@@ -38,7 +37,6 @@ function! SpaceVim#layers#ui#config() abort
   let g:indentLine_char = get(g:, 'indentLine_char', '┊')
   let g:indentLine_concealcursor = 'niv'
   let g:indentLine_conceallevel = 2
-  let g:indentLine_fileType = ['*']
   let g:indentLine_fileTypeExclude = ['help', 'man', 'startify', 'vimfiler']
   let g:signify_disable_by_default = 0
   let g:signify_line_highlight = 0
